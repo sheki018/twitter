@@ -12,18 +12,18 @@ import java.util.List;
 public class RepostCommand implements Command{
     private static final String code = "repost";
     private final UserRepository userRepository;
-    private final Printer tweetViewer;
+    private final Printer printer;
 
-    public RepostCommand(UserRepository userRepository, Printer tweetViewer){
+    public RepostCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
-        this.tweetViewer = tweetViewer;
+        this.printer = printer;
     }
 
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            tweetViewer.printContent("Signin first. Use the command 'signin'.");
+            printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
         List<Tweet> tweets = new ArrayList<>();
@@ -35,27 +35,37 @@ public class RepostCommand implements Command{
             tweets.addAll(following.getTweets());
         }
         if(tweets.size()==0){
-            tweetViewer.printContent("No tweets available to repost.");
+            printer.printContent("No tweets available to repost.");
             return;
         }
         tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
         int index = 1;
         for (Tweet tweet:
                 tweets) {
-            tweetViewer.printContent(index + ". ");
-            tweetViewer.printTweet(tweet);
+            printer.printContent(index + ". ");
+            printer.printTweet(tweet);
             index++;
         }
         GetInput input = new GetInput();
-        int tweetIndex = Integer.parseInt(input.getInput("Which tweet do you want to repost? Provide the index of the tweet that is displayed. "));
-        // todo check for a valid tweet index
+        int tweetIndex=Integer.MAX_VALUE;
+        do {
+            try {
+                tweetIndex = Integer.parseInt(input.getInput("Which tweet do you want to repost? Provide the index of the tweet that is displayed. "));
+            } catch (NumberFormatException e) {
+                printer.printContent("Enter a valid number.");
+                continue;
+            }
+            if (tweetIndex > tweets.size()||tweetIndex<1) {
+                printer.printContent("Enter a valid number.");
+            }
+        }while (tweetIndex > tweets.size()||tweetIndex<1);
         user.repost(tweets.get(tweetIndex-1).getTweet());
         for (User followers:
                 user.getFollowers()) {
             followers.addNotifications("@" + userRepository.getUserName(user) + " reposted");
         }
-        tweetViewer.printContent("Reposted.");
-        // todo reposted tweet should have original tweet's username and mention the other user reposted.... check twitter profile page once
+        printer.printContent("Reposted.");
+        //todo reposted tweet should have original tweet's username and mention the other user reposted.... check twitter profile page once
     }
 
     @Override

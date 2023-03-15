@@ -8,8 +8,6 @@ import java.util.List;
 
 public class CommandExecutor {
     private final List<Command> commands = new ArrayList<>();
-
-    // todo invalid command not working
     private final Command invalidCommand;
 
     public CommandExecutor(UserRepository userRepository, Printer printer) {

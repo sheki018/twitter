@@ -20,4 +20,7 @@ public class UserValidator {
         }
         return false;
     }
+    public boolean isBlank(String input){
+        return input.trim().isEmpty();
+    }
 }

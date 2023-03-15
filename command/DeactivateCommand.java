@@ -29,6 +29,7 @@ public class DeactivateCommand implements Command{
             userRepository.deactivateUser(user, new Date());
             userRepository.signoutUser(user);
             displayMessage.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
+            displayMessage.printContent("Signing you out...");
         }
     }
 

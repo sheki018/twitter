@@ -7,7 +7,7 @@ import java.util.List;
 public class Tweet {
     private String userName;
     private String tweet;
-    List<String> likes = new ArrayList<>();
+    private List<String> likes = new ArrayList<>();
     private Date tweetDate;
     private List<Comment> comments = new ArrayList<>();
     public Tweet(String userName, String tweet){
@@ -51,6 +51,7 @@ public class Tweet {
     public void likeTweet(String userName) {
         likes.add(userName);
     }
+    public void unLikeTweet(String userName){likes.remove(userName);}
 
     public int getLikesCount(){
         return likes.size();

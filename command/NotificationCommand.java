@@ -29,11 +29,11 @@ public class NotificationCommand implements Command{
             displayMessage.printContent("No notifications to display.");
             return;
         }
+        notifications.sort((t1,t2) -> t2.getNotificationDate().compareTo(t1.getNotificationDate()));
         for (Notification notification:
              notifications) {
             displayMessage.printNotification(notification);
         }
-        //todo sort notifications chronologically
     }
 
     @Override

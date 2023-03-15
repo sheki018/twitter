@@ -7,8 +7,6 @@ import ui.output.Printer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class UnFollowCommand implements Command {
     private static final String code = "unfollow";

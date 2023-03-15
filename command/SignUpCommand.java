@@ -5,9 +5,6 @@ import repository.UserRepository;
 import ui.input.UserRegister;
 import ui.output.Printer;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class SignUpCommand implements Command{
     private static final String code = "signup";
     private final UserRepository userRepository;

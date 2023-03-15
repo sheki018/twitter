@@ -5,7 +5,6 @@ import model.Notification;
 import model.Tweet;
 
 import java.io.PrintStream;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Printer {

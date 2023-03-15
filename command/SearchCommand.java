@@ -4,10 +4,7 @@ import model.User;
 import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 public class SearchCommand implements Command{
     private static final String code = "search";
@@ -26,7 +23,7 @@ public class SearchCommand implements Command{
             printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
-        //todo instead of searching by username search by name
+        //todo instead of searching by username search by both name and username
         GetInput input = new GetInput();
         String userNameToSearch = input.getInput("Username: ");
         List<String> users = userRepository.searchResults(userNameToSearch);
