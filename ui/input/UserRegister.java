@@ -30,7 +30,7 @@ public class UserRegister {
         String userName = scanner.nextLine();
         System.out.println("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
         return new String[]{name, email, dob, password, userName, "normal", "out"};
-        //todo for verified users change it to verified user
+        // todo for verified users change it to verified user
     }
 
 

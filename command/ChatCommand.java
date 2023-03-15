@@ -28,6 +28,10 @@ public class ChatCommand implements Command{
         String sender = userRepository.getUserName(user);
         GetInput input = new GetInput();
         String person = input.getInput("Who do you want to chat with? @");
+        if(userRepository.isDeactivatedUser(userRepository.getUser(person))){
+            displayMessage.printContent("User no longer available.");
+            return;
+        }
         if(userRepository.noUserName(person)){
             displayMessage.printContent("No such user found.");
             return;

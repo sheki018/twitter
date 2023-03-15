@@ -27,6 +27,9 @@ public class FeedCommand implements Command{
         List<Tweet> tweets = new ArrayList<>(user.getTweets());
         for (User following:
              user.getFollowingUsers()) {
+            if(userRepository.isDeactivatedUser(following)){
+                continue;
+            }
             tweets.addAll(following.getTweets());
         }
         tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));

@@ -35,9 +35,12 @@ public class UnFollowCommand implements Command {
         List<String> followingUserNames = new ArrayList<>();
         for (User person:
              followingUsers) {
+            if(userRepository.isDeactivatedUser(person)){
+                continue;
+            }
             followingUserNames.add(userRepository.getUserName(person));
         }
-        printer.printContent("You are following: " + followingUserNames.toString());
+        printer.printContent("You are following: " + followingUserNames);
         GetInput input = new GetInput();
         String userName = input.getInput("Who do you want to unfollow? @");
         if(userName.equals("")){
@@ -46,6 +49,9 @@ public class UnFollowCommand implements Command {
         User userToUnFollow = userRepository.getUser(userName);
         int flag=0;
         for (User person: followingUsers) {
+            if(userRepository.isDeactivatedUser(person)){
+                flag=2;
+            }
             if(userToUnFollow==person){
                 flag=1;
                 break;
@@ -54,7 +60,9 @@ public class UnFollowCommand implements Command {
         if(flag==0){
             printer.printContent("You are not following " + userName + " .");
             return;
-        }else{
+        } else if (flag==2) {
+            printer.printContent("User unavailable.");
+        } else{
             user.removeFollowing(userToUnFollow);
             userToUnFollow.removeFollowers(user);
         }

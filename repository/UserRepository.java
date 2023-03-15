@@ -2,17 +2,14 @@ package repository;
 
 import model.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRepository {
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<User, String[]> userDetails = new HashMap<>();
-    private final Map<String, User> deactivatedUsers = new HashMap<>();
+    private final Map<User, Date> deactivatedUsers = new HashMap<>();
 
     public void registerUser(String[] details){
         String userName = details[4];
@@ -21,12 +18,23 @@ public class UserRepository {
         userDetails.put(user, details);
     }
 
-    public void deactivateUser(User user){
-        deactivatedUsers.put(getUserName(user),user);
+    public void deactivateUser(User user, Date date){
+        deactivatedUsers.put(user,date);
     }
 
-    public boolean isDeactivatedUser(String userName){
-        return deactivatedUsers.containsKey(userName);
+    public boolean isDeactivatedUser(User user){
+        return deactivatedUsers.containsKey(user);
+    }
+
+    public Date deactivatedTime(User user){return deactivatedUsers.get(user);}
+    public void activateUser(User user){
+        deactivatedUsers.remove(user);
+    }
+    //todo use thread to delete users permanently in the background
+    public void deleteUser(User user){
+        deactivatedUsers.remove(user);
+        userMap.remove(getUserName(user));
+        userDetails.remove(user);
     }
     public boolean noUserName(String userName) {
         User user = userMap.get(userName);
@@ -94,6 +102,9 @@ public class UserRepository {
         List<String> result = new ArrayList<>();
         for(Map.Entry<String, User> entry: userMap.entrySet()) {
             String match = entry.getKey();
+            if(isDeactivatedUser(getUser(match))){
+                continue;
+            }
             Matcher matcher = regex.matcher(match);
             if(matcher.find()){
                 result.add(match);

@@ -5,6 +5,8 @@ import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
 
+import java.util.Date;
+
 public class DeactivateCommand implements Command{
     private static final String code = "deactivate";
     private final UserRepository userRepository;
@@ -24,7 +26,7 @@ public class DeactivateCommand implements Command{
         GetInput input = new GetInput();
         String reply = input.getInput("Are you sure you want to deactivate your account?(yes/no) ");
         if(reply.equalsIgnoreCase("yes")){
-            userRepository.deactivateUser(user);
+            userRepository.deactivateUser(user, new Date());
             userRepository.signoutUser(user);
             displayMessage.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
         }

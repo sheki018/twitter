@@ -29,6 +29,9 @@ public class LikeCommand implements Command{
         List<Tweet> tweets = new ArrayList<>(user.getTweets());
         for (User following:
                 user.getFollowingUsers()) {
+            if(userRepository.isDeactivatedUser(following)){
+                continue;
+            }
             tweets.addAll(following.getTweets());
         }
         tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
@@ -41,7 +44,7 @@ public class LikeCommand implements Command{
         }
         GetInput input = new GetInput();
         int tweetIndex = Integer.parseInt(input.getInput("Which tweet do you want to like? Provide the index of the tweet that is displayed. "));
-        // todo check for a valid tweet index
+        // todo check for a valid tweet index and it should be a number - do it for comment and repost also!!!!!!!!
         // todo a user cannot like multiple times
         //todo unlike tweet
         tweets.get(tweetIndex-1).likeTweet(userRepository.getUserName(user));

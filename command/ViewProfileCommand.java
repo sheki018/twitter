@@ -27,7 +27,7 @@ public class ViewProfileCommand implements Command{
         }
         GetInput input = new GetInput();
         String userName = input.getInput("Provide the username of the user's profile you want to see: ");
-        if(userRepository.noUserName(userName)){
+        if(userRepository.noUserName(userName)|| userRepository.isDeactivatedUser(userRepository.getUser(userName))){
             displayInformation.printContent("There is no account named " + userName + " .");
             return;
         }

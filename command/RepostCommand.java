@@ -29,6 +29,9 @@ public class RepostCommand implements Command{
         List<Tweet> tweets = new ArrayList<>();
         for (User following:
                 user.getFollowingUsers()) {
+            if(userRepository.isDeactivatedUser(following)){
+                continue;
+            }
             tweets.addAll(following.getTweets());
         }
         if(tweets.size()==0){
@@ -46,12 +49,13 @@ public class RepostCommand implements Command{
         GetInput input = new GetInput();
         int tweetIndex = Integer.parseInt(input.getInput("Which tweet do you want to repost? Provide the index of the tweet that is displayed. "));
         // todo check for a valid tweet index
-        user.repost(tweets.get(tweetIndex).getTweet());
+        user.repost(tweets.get(tweetIndex-1).getTweet());
         for (User followers:
                 user.getFollowers()) {
             followers.addNotifications("@" + userRepository.getUserName(user) + " reposted");
         }
         tweetViewer.printContent("Reposted.");
+        // todo reposted tweet should have original tweet's username and mention the other user reposted.... check twitter profile page once
     }
 
     @Override

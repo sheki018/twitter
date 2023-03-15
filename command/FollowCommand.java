@@ -27,7 +27,7 @@ public class FollowCommand implements Command{
         if(userName.equals("")){
             return;
         }
-        if(userRepository.noUserName(userName)){
+        if(userRepository.noUserName(userName)||userRepository.isDeactivatedUser(userRepository.getUser(userName))){
             printer.printContent("There is no account named " + userName + " .");
             return;
         }
