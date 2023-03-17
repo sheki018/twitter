@@ -25,6 +25,7 @@ public class CommandExecutor {
         commands.add(new UpdateProfileCommand(userRepository, printer));
         commands.add(new ChatCommand(userRepository, printer));
         commands.add(new NotificationCommand(userRepository, printer));
+        commands.add(new ApplyForVerificationCommand(userRepository, printer));
         commands.add(new DeactivateCommand(userRepository, printer));
         commands.add(new SignOutCommand(userRepository, printer));
         this.invalidCommand = new InvalidCommand(printer);

@@ -116,4 +116,7 @@ public class UserRepository {
     public String getAccountType(User user){
         return userDetails.get(user)[5];
     }
+    public void verifyUser(User user){
+        userDetails.get(user)[5]="verified";
+    }
 }
