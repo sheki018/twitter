@@ -49,7 +49,7 @@ public class UserRepository {
 
     public void updateStatus(String userName) {
         User user = userMap.get(userName);
-        userDetails.get(user)[5] = "active";
+        userDetails.get(user)[6] = "active";
     }
 
     public User getUser(String userName){
@@ -70,7 +70,7 @@ public class UserRepository {
         User user = null;
         for(Map.Entry<User, String[]> entry: userDetails.entrySet()) {
             String[] details = entry.getValue();
-            if(details[5].equals("active")){
+            if(details[6].equals("active")){
                 user = entry.getKey();
             }
         }
@@ -94,7 +94,7 @@ public class UserRepository {
     }
 
     public void signoutUser(User user) {
-        userDetails.get(user)[5]="out";
+        userDetails.get(user)[6]="out";
     }
 
     public List<String> searchResults(String userName) {
@@ -111,5 +111,9 @@ public class UserRepository {
             }
         }
         return result;
+    }
+
+    public String getAccountType(User user){
+        return userDetails.get(user)[5];
     }
 }
