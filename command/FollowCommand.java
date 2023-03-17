@@ -5,6 +5,8 @@ import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
 
+import java.util.List;
+
 public class FollowCommand implements Command{
     private static final String code = "follow";
     private final UserRepository userRepository;
@@ -36,6 +38,11 @@ public class FollowCommand implements Command{
             return;
         }
         User userToFollow = userRepository.getUser(userName);
+        List<User> following = user.getFollowingUsers();
+        if(following.contains(userToFollow)){
+            printer.printContent("You are already following @" + userName);
+            return;
+        }
         user.addFollowing(userToFollow);
         userToFollow.addFollowers(user);
         userToFollow.addNotifications("@"+userRepository.getUserName(user)+" follows you");

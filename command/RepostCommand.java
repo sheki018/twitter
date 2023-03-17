@@ -59,13 +59,25 @@ public class RepostCommand implements Command{
                 printer.printContent("Enter a valid number.");
             }
         }while (tweetIndex > tweets.size()||tweetIndex<1);
-        user.repost(tweets.get(tweetIndex-1).getTweet());
-        for (User followers:
-                user.getFollowers()) {
-            followers.addNotifications("@" + userRepository.getUserName(user) + " reposted");
+        List<String> retweetedBy = tweets.get(tweetIndex-1).retweetedBy();
+        if(retweetedBy.contains(userRepository.getUserName(user))){
+            printer.printContent("You have already retweeted the tweet.");
+            if(input.getInput("Do you want to undo your action? ").equalsIgnoreCase("yes")){
+                tweets.get(tweetIndex-1).undoRetweet(userRepository.getUserName(user));
+                printer.printContent("Your action was recorded.");
+            }
+        }else{
+            //String origin = tweets.get(tweetIndex-1).getUserName();
+            tweets.get(tweetIndex-1).retweet(userRepository.getUserName(user));
+            for (User followers:
+                    user.getFollowers()) {
+                followers.addNotifications("@" + userRepository.getUserName(user) + " reposted");
+            }
+            printer.printContent("Reposted.");
         }
-        printer.printContent("Reposted.");
+        //user.repost(tweets.get(tweetIndex-1));
         //todo reposted tweet should have original tweet's username and mention the other user reposted.... check twitter profile page once
+        //todo how to have the old tweet as such but just add a header that someone retweeted??????????????
     }
 
     @Override

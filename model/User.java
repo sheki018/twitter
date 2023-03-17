@@ -11,6 +11,7 @@ public class User {
     private List<User> followers = new ArrayList<>();
     private List<Message> messages = new ArrayList<>();
     private List<Notification> notifications = new ArrayList<>();
+    private List<Tweet> retweets = new ArrayList<>();
 
     private Profile profile;
 
@@ -24,10 +25,11 @@ public class User {
     }
     //todo remove tweet feature
 
-    public void repost(String tweet){
-        tweets.add(new Tweet(userName, tweet));
+    //todo how to have the old tweet as such but just add a header that someone retweeted??????????????
+    public void retweet(Tweet tweet){
+        retweets.add(tweet);
     }
-
+    public List<Tweet> getRetweets(){return retweets;}
     public void addFollowing(User user){
         if(!followingUsers.contains(user)){
             followingUsers.add(user);

@@ -25,17 +25,22 @@ public class FeedCommand implements Command{
             return;
         }
         List<Tweet> tweets = new ArrayList<>(user.getTweets());
+        //tweets.addAll(user.getRetweets());
         for (User following:
              user.getFollowingUsers()) {
             if(userRepository.isDeactivatedUser(following)){
                 continue;
             }
             tweets.addAll(following.getTweets());
+            //tweets.addAll(following.getRetweets());
         }
         tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
+        if(tweets.size()==0){
+            tweetViewer.printContent("No tweets to display.");
+        }
         for (Tweet tweet:
              tweets) {
-            tweetViewer.printTweet(tweet);
+            tweetViewer.printFeed(tweet);
         }
     }
 

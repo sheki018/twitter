@@ -49,7 +49,7 @@ public class ViewProfileCommand implements Command{
             displayInformation.printContent("------------------Tweets------------------");
             tweets.sort((t1, t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
             for (Tweet tweet : tweets) {
-                displayInformation.printTweet(tweet);
+                displayInformation.printFeed(tweet);
             }
         }
     }

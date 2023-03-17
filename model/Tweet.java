@@ -10,6 +10,7 @@ public class Tweet {
     private List<String> likes = new ArrayList<>();
     private Date tweetDate;
     private List<Comment> comments = new ArrayList<>();
+    private List<String> retweets = new ArrayList<>();
     public Tweet(String userName, String tweet){
         this.userName = userName;
         this.tweet = tweet;
@@ -61,6 +62,18 @@ public class Tweet {
         return likes;
     }
 
+    public void retweet(String userName) {
+        retweets.add(userName);
+    }
+    public void undoRetweet(String userName){retweets.remove(userName);}
+
+    public int getRetweetsCount(){
+        return retweets.size();
+    }
+
+    public List<String> retweetedBy(){
+        return retweets;
+    }
     public void commentTweet(String userName, String comment) {
         comments.add(new Comment(userName, comment));
     }
