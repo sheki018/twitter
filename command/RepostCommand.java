@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepostCommand implements Command{
-    private static final String code = "repost";
+    private static final String code = "retweet";
     private final UserRepository userRepository;
     private final Printer printer;
 

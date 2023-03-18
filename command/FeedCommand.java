@@ -11,17 +11,17 @@ import java.util.List;
 public class FeedCommand implements Command{
     private static final String code = "feed";
     private final UserRepository userRepository;
-    private final Printer tweetViewer;
+    private final Printer printer;
 
-    public FeedCommand(UserRepository userRepository, Printer tweetViewer){
+    public FeedCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
-        this.tweetViewer = tweetViewer;
+        this.printer = printer;
     }
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            tweetViewer.printContent("Signin first. Use the command 'signin'.");
+            printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
         List<Tweet> tweets = new ArrayList<>(user.getTweets());
@@ -36,12 +36,16 @@ public class FeedCommand implements Command{
         }
         tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
         if(tweets.size()==0){
-            tweetViewer.printContent("No tweets to display.");
+            printer.printContent("No tweets to display.");
+            return;
         }
         for (Tweet tweet:
              tweets) {
-            tweetViewer.printFeed(tweet);
+            printer.printFeed(tweet);
         }
+        printer.printContent("To like a tweet use the command 'like'.");
+        printer.printContent("To comment on a tweet use the command 'comment'.");
+        printer.printContent("To retweet a tweet use the command 'retweet'.");
     }
 
     @Override

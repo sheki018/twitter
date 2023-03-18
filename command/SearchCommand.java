@@ -29,9 +29,11 @@ public class SearchCommand implements Command{
         List<String> users = userRepository.searchResults(userNameToSearch);
         if(users.size()==0){
             printer.printContent("No results for " + userNameToSearch);
+            return;
         }else{
             printer.printContent(users.toString());
         }
+        printer.printContent("To view or follow these users you can use the commands 'profile' or 'follow'.");
     }
 
     @Override
