@@ -24,6 +24,9 @@ public class User {
         tweets.add(new Tweet(userName, tweet));
     }
     //todo remove tweet feature
+    public void deleteTweet(Tweet tweet){
+        tweets.remove(tweet);
+    }
 
     //todo how to have the old tweet as such but just add a header that someone retweeted??????????????
     public void retweet(Tweet tweet){

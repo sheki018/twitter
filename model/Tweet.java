@@ -48,6 +48,9 @@ public class Tweet {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+    public void removeComment(Comment comment){
+        comments.remove(comment);
+    }
 
     public void likeTweet(String userName) {
         likes.add(userName);

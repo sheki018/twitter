@@ -63,6 +63,9 @@ public class Printer {
             printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", comment.getUserName(), getTimeAgo(comment.getCommentDate().getTime()), comment.getComment());
         }
     }
+    public void printComment(Comment comment){
+        printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", comment.getUserName(), getTimeAgo(comment.getCommentDate().getTime()), comment.getComment());
+    }
 
     public void printTweet(Tweet tweet){
         printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n\n", tweet.getUserName(), getTimeAgo(tweet.getTweetDate().getTime()), tweet.getTweet());

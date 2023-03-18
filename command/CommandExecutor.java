@@ -18,6 +18,7 @@ public class CommandExecutor {
         commands.add(new LikeCommand(userRepository, printer));
         commands.add(new CommentCommand(userRepository, printer));
         commands.add(new RepostCommand(userRepository, printer));
+        commands.add(new DeleteCommand(userRepository, printer));
         commands.add(new SearchCommand(userRepository, printer));
         commands.add(new UnFollowCommand(userRepository,printer));
         commands.add(new FollowCommand(userRepository, printer));
