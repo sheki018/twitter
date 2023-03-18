@@ -19,7 +19,7 @@ public class CommentCommand implements Command{
     public CommentCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
         this.printer = printer;
-        this.validator=new UserValidator();
+        this.validator=new UserValidator(userRepository, printer);
     }
 
     @Override

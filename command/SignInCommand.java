@@ -4,28 +4,34 @@ import model.User;
 import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
+import validation.UserValidator;
 
 import java.util.Date;
 
 public class SignInCommand implements Command{
     private static final String code = "signin";
     private final UserRepository userRepository;
-    private final Printer displayMessage;
+    private final Printer printer;
 
-    public SignInCommand(UserRepository userRepository, Printer displayMessage){
+    public SignInCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+        this.printer = printer;
     }
     @Override
     public void execute(String command) {
+        UserValidator validator = new UserValidator(userRepository, printer);
         User user = userRepository.getActiveUser();
         if(user != null){
-            displayMessage.printContent("A user is already signed in. Sign out to proceed. Use 'signout' command.");
+            printer.printContent("A user is already signed in. Sign out to proceed. Use 'signout' command.");
             return;
         }
         GetInput input = new GetInput();
         String userName = input.getInput("User Name: ");
         String password;
+        if(validator.isBlank(userName)){
+            printer.printContent("User name cannot be empty.");
+            return;
+        }
         if(userRepository.isDeactivatedUser(userRepository.getUser(userName))&&new Date().getTime()/60000-userRepository.deactivatedTime(userRepository.getUser(userName)).getTime()/60000<=10){
             String option = input.getInput("Your account has been deactivated. Do you want to reactivate it? (yes/no) ");
             if(option.equalsIgnoreCase("no")){
@@ -33,7 +39,7 @@ public class SignInCommand implements Command{
             }
         }
         if(userRepository.noUserName(userName)){
-            displayMessage.printContent("There is no account named " + userName + ". Do you want to create a new account? Use the command 'signup'.");
+            printer.printContent("There is no account named " + userName + ". Do you want to create a new account? Use the command 'signup'.");
             return;
         }
         //limit incorrect password attempts to 3
@@ -41,17 +47,17 @@ public class SignInCommand implements Command{
         do{
             password = input.getInput("Password: ");
             if(userRepository.notMatchesPassword(userName, password)){
-                displayMessage.printContent("Incorrect password");
+                printer.printContent("Incorrect password.");
                 count++;
             }
             if(count==3){
-                displayMessage.printContent("Try after some time!");
+                printer.printContent("Try after some time!");
                 //todo dont allow the user to signin for a specific amount of time. display a message so.
                 return;
             }
         }while (userRepository.notMatchesPassword(userName, password));
         userRepository.updateStatus(userName);
-        displayMessage.printContent("Login successful.");
+        printer.printContent("Login successful.");
         //remove from deactivated list
         if(userRepository.isDeactivatedUser(userRepository.getUser(userName))){
             userRepository.activateUser(userRepository.getUser(userName));

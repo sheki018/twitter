@@ -8,23 +8,24 @@ import ui.output.Printer;
 public class SignUpCommand implements Command{
     private static final String code = "signup";
     private final UserRepository userRepository;
-    private final Printer displayMessage;
+    private final Printer printer;
 
-    public SignUpCommand(UserRepository userRepository, Printer displayMessage){
+    public SignUpCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+        this.printer = printer;
     }
 
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user != null){
-            displayMessage.printContent("A user is already signed in. Sign out to proceed. Use 'signout' command.");
+            printer.printContent("A user is already signed in. Sign out to proceed. Use 'signout' command.");
             return;
         }
-        UserRegister userRegister = new UserRegister();
-        String[] details = userRegister.getDetails();
+        UserRegister userRegister = new UserRegister(userRepository, printer);
+        String[] details = userRegister.userDetails();
         userRepository.registerUser(details);
+        printer.printContent("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
     }
 
     @Override

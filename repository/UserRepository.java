@@ -65,7 +65,14 @@ public class UserRepository {
         }
         return name;
     }
-
+    public boolean getEmail(String mail){
+        for(Map.Entry<User, String[]> entry: userDetails.entrySet()) {
+            if(entry.getValue()[1].equals(mail)){
+                return true;
+            }
+        }
+        return false;
+    }
     public User getActiveUser() {
         User user = null;
         for(Map.Entry<User, String[]> entry: userDetails.entrySet()) {

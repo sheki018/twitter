@@ -1,37 +1,73 @@
 package ui.input;
 
+import repository.UserRepository;
+import ui.output.Printer;
+import validation.UserValidator;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
 
 public class UserRegister {
-    private static final Scanner scanner = new Scanner(System.in);
-    public String[] getDetails(){
-        System.out.print("Name: ");
-        String name = scanner.nextLine();
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        System.out.println("Date of Birth");
-        System.out.print("Day: ");
-        int day = scanner.nextInt();
-        System.out.print("Month: ");
-        int month = scanner.nextInt();
-        System.out.print("Year: ");
-        int year = scanner.nextInt();
-        scanner.nextLine();
+    private static final GetInput input = new GetInput();
+    private final UserRepository userRepository;
+    private final Printer printer;
+    public UserRegister(UserRepository userRepository, Printer printer){
+        this.userRepository = userRepository;
+        this.printer = printer;
+    }
+    public String[] userDetails(){
+        String name, email, dob, password, confirmPassword, userName;
+        int day=Integer.MAX_VALUE, month=Integer.MAX_VALUE, year=Integer.MAX_VALUE;
+        UserValidator validator = new UserValidator(userRepository, printer);
+        do {
+            name = input.getInput("Name: ");
+        } while (!validator.validateName(name));
+        do {
+            email = input.getInput("Email: ");
+        }while (!validator.validateEmail(email));
+        printer.printContent("Date of Birth");
+        do {
+            boolean flag = true;
+            do {
+                try {
+                    day = Integer.parseInt(input.getInput("Day: "));
+                    flag = false;
+                } catch (NumberFormatException e) {
+                    printer.printContent("Enter a valid number.");
+                }
+            } while (!validator.validateDay(day) || flag);
+            flag = true;
+            do {
+                try {
+                    month = Integer.parseInt(input.getInput("Month: "));
+                    flag = false;
+                } catch (NumberFormatException e) {
+                    printer.printContent("Enter a valid number.");
+                }
+            } while (!validator.validateMonth(month) || flag);
+            flag = true;
+            do {
+                try {
+                    year = Integer.parseInt(input.getInput("Year: "));
+                    flag = false;
+                } catch (NumberFormatException e) {
+                    printer.printContent("Enter a valid number.");
+                }
+            } while (!validator.validateYear(year) || flag);
+        }while (!validator.validateDoB(day, month, year));
         LocalDate date = LocalDate.of(year, month, day);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
-        String dob = date.format(formatter);
-        System.out.print("Password: ");
-        String password = scanner.nextLine();
-        System.out.print("Confirm Password: ");
-        String confirmPassword = scanner.nextLine();
-        System.out.print("User name: ");
-        String userName = scanner.nextLine();
-        System.out.println("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
+        dob = date.format(formatter);
+        do {
+            printer.printContent("Password policy: Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^). It should not contain any white space. It should be at least 8 characters long and at most 20 characters long.");
+            password = input.getInput("Password: ");
+        }while(!validator.validatePassword(password));
+        do {
+            confirmPassword = input.getInput("Confirm Password: ");
+        }while (!validator.validatePassword(password,confirmPassword));
+        do {
+            userName = input.getInput("User name: ");
+        }while (!validator.validateUserName(userName));
         return new String[]{name, email, dob, password, userName, "normal", "out"};
-        // todo for verified users change it to verified user
     }
-
-
 }

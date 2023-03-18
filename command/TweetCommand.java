@@ -15,7 +15,7 @@ public class TweetCommand implements Command{
     public TweetCommand(UserRepository userRepository, Printer displayMessage){
         this.userRepository = userRepository;
         this.printer = displayMessage;
-        this.validator = new UserValidator();
+        this.validator = new UserValidator(userRepository, printer);
     }
 
     @Override
