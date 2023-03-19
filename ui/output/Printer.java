@@ -59,6 +59,7 @@ public class Printer {
     }
     public void printComment(Tweet tweet){
         List<Comment> comments = tweet.getComments();
+        comments.sort((t1,t2) -> t2.getCommentDate().compareTo(t1.getCommentDate()));
         for(Comment comment : comments) {
             printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", comment.getUserName(), getTimeAgo(comment.getCommentDate().getTime()), comment.getComment());
         }

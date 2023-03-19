@@ -9,12 +9,12 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepostCommand implements Command{
+public class RetweetCommand implements Command{
     private static final String code = "retweet";
     private final UserRepository userRepository;
     private final Printer printer;
 
-    public RepostCommand(UserRepository userRepository, Printer printer){
+    public RetweetCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
         this.printer = printer;
     }
@@ -69,6 +69,7 @@ public class RepostCommand implements Command{
         }else{
             //String origin = tweets.get(tweetIndex-1).getUserName();
             tweets.get(tweetIndex-1).retweet(userRepository.getUserName(user));
+            user.retweet(tweets.get(tweetIndex-1));
             for (User followers:
                     user.getFollowers()) {
                 followers.addNotifications("@" + userRepository.getUserName(user) + " reposted");

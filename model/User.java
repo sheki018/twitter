@@ -30,9 +30,13 @@ public class User {
 
     //todo how to have the old tweet as such but just add a header that someone retweeted??????????????
     public void retweet(Tweet tweet){
+        new Retweet(tweet);
         retweets.add(tweet);
     }
     public List<Tweet> getRetweets(){return retweets;}
+    public void setRetweets(List<Tweet> tweets){
+        this.retweets=tweets;
+    }
     public void addFollowing(User user){
         if(!followingUsers.contains(user)){
             followingUsers.add(user);

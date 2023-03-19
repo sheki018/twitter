@@ -5,8 +5,7 @@ import model.User;
 import repository.UserRepository;
 import ui.output.Printer;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class FeedCommand implements Command{
     private static final String code = "feed";
@@ -24,25 +23,57 @@ public class FeedCommand implements Command{
             printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
-        List<Tweet> tweets = new ArrayList<>(user.getTweets());
-        //tweets.addAll(user.getRetweets());
+        Map<Tweet, Map<String, String>> tweetsMap = new HashMap<>();
+        String userName = userRepository.getUserName(user);
+        Map<String, String> details = new HashMap<>();
+        details.put(userName, "tweet");
+        for(Tweet tweet : user.getTweets()){
+             tweetsMap.put(tweet, details);
+        }
+        Map<String, String> retweetDetails = new HashMap<>();
+        retweetDetails.put(userName, "retweet");
+        for (Tweet retweet : user.getRetweets()){
+            tweetsMap.put(retweet, retweetDetails);
+            System.out.println(tweetsMap.size());
+        }
         for (User following:
              user.getFollowingUsers()) {
             if(userRepository.isDeactivatedUser(following)){
                 continue;
             }
-            tweets.addAll(following.getTweets());
-            //tweets.addAll(following.getRetweets());
+            userName = userRepository.getUserName(following);
+            Map<String, String> tDetails = new HashMap<>();
+            tDetails.put(userName, "tweet");
+            for(Tweet tweet : following.getTweets()){
+                tweetsMap.put(tweet, tDetails);
+            }
+            Map<String, String> rDetails = new HashMap<>();
+            rDetails.put(userName, "retweet");
+            for (Tweet retweet : following.getRetweets()){
+                tweetsMap.put(retweet, rDetails);
+            }
         }
-        tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
-        if(tweets.size()==0){
+
+        Comparator<Tweet> byTweet = (Tweet t1, Tweet t2) -> t2.getTweetDate().compareTo(t1.getTweetDate());
+        Map<Tweet, Map<String, String>> sortedTweetsMap = new TreeMap<>(byTweet);
+        sortedTweetsMap.putAll(tweetsMap);
+        if(tweetsMap.size()==0){
             printer.printContent("No tweets to display.");
             return;
         }
-        for (Tweet tweet:
-             tweets) {
+        for (Map.Entry<Tweet, Map<String, String>> tweetEntry : sortedTweetsMap.entrySet()) {
+            Tweet tweet = tweetEntry.getKey();
+            Map<String, String> tweetDetails = tweetEntry.getValue();
+            for (Map.Entry<String, String> innerEntry : tweetDetails.entrySet()) {
+                userName = innerEntry.getKey();
+                String type = innerEntry.getValue();
+                if(type.equalsIgnoreCase("retweet")){
+                    printer.printContent("@" + userName + " retweeted");
+                }
+            }
             printer.printFeed(tweet);
         }
+
         printer.printContent("To like a tweet use the command 'like'.");
         printer.printContent("To comment on a tweet use the command 'comment'.");
         printer.printContent("To retweet a tweet use the command 'retweet'.");
