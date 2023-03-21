@@ -5,6 +5,7 @@ import model.User;
 import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
+import validation.TweetValidator;
 import validation.UserValidator;
 
 import java.util.ArrayList;
@@ -14,12 +15,12 @@ public class CommentCommand implements Command{
     private static final String code = "comment";
     private final UserRepository userRepository;
     private final Printer printer;
-    private final UserValidator validator;
+    private final TweetValidator validator;
 
     public CommentCommand(UserRepository userRepository, Printer printer){
         this.userRepository = userRepository;
         this.printer = printer;
-        this.validator=new UserValidator(userRepository, printer);
+        this.validator=new TweetValidator(userRepository, printer);
     }
 
     @Override
@@ -66,10 +67,7 @@ public class CommentCommand implements Command{
         String comment;
         do {
             comment = input.getInput("Your comment: ");
-            if (comment.isEmpty()||validator.isBlank(comment)) {
-                printer.printContent("Comment cannot be empty.");
-            }
-        }while (comment.isEmpty()||validator.isBlank(comment));
+        }while (!validator.validateTweet(comment));
         tweets.get(tweetIndex-1).commentTweet(userRepository.getUserName(user), comment);
         String userName = tweets.get(tweetIndex-1).getUserName();
         if(!userName.equalsIgnoreCase(userRepository.getUserName(user))){

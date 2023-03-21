@@ -80,7 +80,6 @@ public class Tweet {
     public void commentTweet(String userName, String comment) {
         comments.add(new Comment(userName, comment));
     }
-    //todo remove comment feature
 
     public int getCommentsCount(){
         return comments.size();

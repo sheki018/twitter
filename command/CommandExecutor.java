@@ -15,6 +15,7 @@ public class CommandExecutor {
         commands.add(new SignInCommand(userRepository, printer));
         commands.add(new FeedCommand(userRepository, printer));
         commands.add(new TweetCommand(userRepository, printer));
+        commands.add(new EditCommand(userRepository, printer));
         commands.add(new LikeCommand(userRepository, printer));
         commands.add(new CommentCommand(userRepository, printer));
         commands.add(new RetweetCommand(userRepository, printer));

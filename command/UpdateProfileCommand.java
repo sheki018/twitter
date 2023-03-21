@@ -4,6 +4,7 @@ import model.User;
 import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
+import validation.UserValidator;
 
 public class UpdateProfileCommand implements Command{
     private static final String code = "update";
@@ -22,6 +23,7 @@ public class UpdateProfileCommand implements Command{
             printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
+        UserValidator validator = new UserValidator(userRepository, printer);
         String userName = userRepository.getUserName(user);
         GetInput input = new GetInput();
         String changeItem = input.getInput("What do you want to update (bio, location, password)? ");
@@ -48,9 +50,11 @@ public class UpdateProfileCommand implements Command{
                     if (!userRepository.notMatchesPassword(userName, newPassword)) {
                         printer.printContent("The new password cannot be same as the old password.");
                     }
-                }while (!userRepository.notMatchesPassword(userName, newPassword));
-                String confirmPassword = input.getInput("Confirm password: ");
-                // todo validate equality of both new and confirm password and new password shouldnt be equal to old password
+                }while (!userRepository.notMatchesPassword(userName, newPassword)&&!validator.validatePassword(newPassword));
+                String confirmPassword;
+                do {
+                    confirmPassword = input.getInput("Confirm Password: ");
+                }while (!validator.validatePassword(newPassword,confirmPassword));
                 userRepository.updatePassword(userName, newPassword);
                 printer.printContent("Updated password successfully!");
 

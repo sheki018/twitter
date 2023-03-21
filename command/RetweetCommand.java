@@ -67,7 +67,6 @@ public class RetweetCommand implements Command{
                 printer.printContent("Your action was recorded.");
             }
         }else{
-            //String origin = tweets.get(tweetIndex-1).getUserName();
             tweets.get(tweetIndex-1).retweet(userRepository.getUserName(user));
             user.retweet(tweets.get(tweetIndex-1));
             for (User followers:
@@ -76,9 +75,6 @@ public class RetweetCommand implements Command{
             }
             printer.printContent("Reposted.");
         }
-        //user.repost(tweets.get(tweetIndex-1));
-        //todo reposted tweet should have original tweet's username and mention the other user reposted.... check twitter profile page once
-        //todo how to have the old tweet as such but just add a header that someone retweeted??????????????
     }
 
     @Override

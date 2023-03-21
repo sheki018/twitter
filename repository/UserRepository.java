@@ -1,6 +1,7 @@
 package repository;
 
 import model.User;
+import model.VerifiedUser;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -124,6 +125,7 @@ public class UserRepository {
         return userDetails.get(user)[5];
     }
     public void verifyUser(User user){
+        VerifiedUser verifiedUser = new VerifiedUser(getUserName(user));
         userDetails.get(user)[5]="verified";
     }
 }

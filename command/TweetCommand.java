@@ -4,18 +4,19 @@ import model.User;
 import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
+import validation.TweetValidator;
 import validation.UserValidator;
 
 public class TweetCommand implements Command{
     private static final String code = "tweet";
     private final UserRepository userRepository;
     private final Printer printer;
-    private final UserValidator validator;
+    private final TweetValidator validator;
 
     public TweetCommand(UserRepository userRepository, Printer displayMessage){
         this.userRepository = userRepository;
         this.printer = displayMessage;
-        this.validator = new UserValidator(userRepository, printer);
+        this.validator = new TweetValidator(userRepository, printer);
     }
 
     @Override
@@ -26,14 +27,10 @@ public class TweetCommand implements Command{
             return;
         }
         GetInput input = new GetInput();
-        String tweet = input.getInput("What's in your mind? ");
-        if(tweet.isEmpty()||validator.isBlank(tweet)){
-            printer.printContent("Tweet cannot be empty.");
-        }
-        if(tweet.length()>280){
-            printer.printContent("Maximum characters allowed: 280.");
-        }
-
+        String tweet;
+        do {
+            tweet = input.getInput("What's in your mind? ");
+        }while ((!validator.validateTweetLength(tweet, user)) || (!validator.validateTweet(tweet)));
         user.addTweet(tweet);
         for (User followers:
                 user.getFollowers()) {
