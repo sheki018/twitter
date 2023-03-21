@@ -20,18 +20,17 @@ public class SearchCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        //todo instead of searching by username search by both name and username
         GetInput input = new GetInput();
         String userNameToSearch = input.getInput("Username: ");
         List<String> users = userRepository.searchResults(userNameToSearch);
         if(users.size()==0){
-            printer.printContent("No results for " + userNameToSearch);
+            printer.printError("No results for " + userNameToSearch);
             return;
         }else{
-            printer.printContent(users.toString());
+            printer.printSuccess(users.toString());
         }
         printer.printContent("To view or follow these users you can use the commands 'profile' or 'follow'.");
     }

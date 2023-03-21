@@ -21,12 +21,12 @@ public class NotificationCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printContent("Signin first. Use the command 'signin'.");
+            displayMessage.printError("Signin first. Use the command 'signin'.");
             return;
         }
         List<Notification> notifications = user.viewNotifications();
         if(notifications.size()==0){
-            displayMessage.printContent("No notifications to display.");
+            displayMessage.printError("No notifications to display.");
             return;
         }
         notifications.sort((t1,t2) -> t2.getNotificationDate().compareTo(t1.getNotificationDate()));

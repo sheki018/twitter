@@ -33,7 +33,7 @@ public class UserRegister {
                     day = Integer.parseInt(input.getInput("Day: "));
                     flag = false;
                 } catch (NumberFormatException e) {
-                    printer.printContent("Enter a valid number.");
+                    printer.printError("Enter a valid number.");
                 }
             } while (!validator.validateDay(day) || flag);
             flag = true;
@@ -42,7 +42,7 @@ public class UserRegister {
                     month = Integer.parseInt(input.getInput("Month: "));
                     flag = false;
                 } catch (NumberFormatException e) {
-                    printer.printContent("Enter a valid number.");
+                    printer.printError("Enter a valid number.");
                 }
             } while (!validator.validateMonth(month) || flag);
             flag = true;
@@ -51,7 +51,7 @@ public class UserRegister {
                     year = Integer.parseInt(input.getInput("Year: "));
                     flag = false;
                 } catch (NumberFormatException e) {
-                    printer.printContent("Enter a valid number.");
+                    printer.printError("Enter a valid number.");
                 }
             } while (!validator.validateYear(year) || flag);
         }while (!validator.validateDoB(day, month, year));
@@ -61,10 +61,10 @@ public class UserRegister {
         do {
             printer.printContent("Password policy: Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^). It should not contain any white space. It should be at least 8 characters long and at most 20 characters long.");
             password = input.getInput("Password: ");
-        }while(!validator.validatePassword(password));
+        }while(validator.validatePassword(password));
         do {
             confirmPassword = input.getInput("Confirm Password: ");
-        }while (!validator.validatePassword(password,confirmPassword));
+        }while (validator.validatePassword(password, confirmPassword));
         do {
             userName = input.getInput("User name: ");
         }while (!validator.validateUserName(userName));

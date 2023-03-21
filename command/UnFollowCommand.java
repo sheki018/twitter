@@ -22,12 +22,12 @@ public class UnFollowCommand implements Command {
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         List<User> followingUsers = user.getFollowingUsers();
         if(followingUsers.size()==0){
-            printer.printContent("You are not following anyone.");
+            printer.printError("You are not following anyone.");
             return;
         }
         List<String> followingUserNames = new ArrayList<>();
@@ -56,15 +56,15 @@ public class UnFollowCommand implements Command {
             }
         }
         if(flag==0){
-            printer.printContent("You are not following " + userName + " .");
+            printer.printError("You are not following " + userName + " .");
             return;
         } else if (flag==2) {
-            printer.printContent("User unavailable.");
+            printer.printError("User unavailable.");
         } else{
             user.removeFollowing(userToUnFollow);
             userToUnFollow.removeFollowers(user);
         }
-        printer.printContent("You unfollowed @" + userName + ".");
+        printer.printSuccess("You unfollowed @" + userName + ".");
     }
 
     @Override

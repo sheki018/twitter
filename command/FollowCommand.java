@@ -21,7 +21,7 @@ public class FollowCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         GetInput input = new GetInput();
@@ -30,23 +30,23 @@ public class FollowCommand implements Command{
             return;
         }
         if(userRepository.noUserName(userName)||userRepository.isDeactivatedUser(userRepository.getUser(userName))){
-            printer.printContent("There is no account named " + userName + " .");
+            printer.printError("There is no account named " + userName + " .");
             return;
         }
         if(userName.equals(userRepository.getUserName(user))){
-            printer.printContent("You cannot follow yourself.");
+            printer.printError("You cannot follow yourself.");
             return;
         }
         User userToFollow = userRepository.getUser(userName);
         List<User> following = user.getFollowingUsers();
         if(following.contains(userToFollow)){
-            printer.printContent("You are already following @" + userName);
+            printer.printError("You are already following @" + userName);
             return;
         }
         user.addFollowing(userToFollow);
         userToFollow.addFollowers(user);
         userToFollow.addNotifications("@"+userRepository.getUserName(user)+" follows you");
-        printer.printContent("You are now following " + userName + ".");
+        printer.printSuccess("You are now following " + userName + ".");
     }
 
     @Override

@@ -10,7 +10,7 @@ public class InvalidCommand implements Command{
     }
     @Override
     public void execute(String command) {
-        tweetViewer.printContent(String.format("Command: %s is invalid!", command));
+        tweetViewer.printError(String.format("Command: %s is invalid!", command));
     }
 
     @Override

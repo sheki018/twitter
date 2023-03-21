@@ -22,26 +22,31 @@ public class ViewProfileCommand implements Command{
     public void execute(String command) {
         User activeUser = userRepository.getActiveUser();
         if(activeUser == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         GetInput input = new GetInput();
         String userName = input.getInput("Provide the username of the user's profile you want to see: ");
         if(userRepository.noUserName(userName)|| userRepository.isDeactivatedUser(userRepository.getUser(userName))){
-            printer.printContent("There is no account named " + userName + " .");
+            printer.printError("There is no account named " + userName + " .");
             return;
         }
         User user = userRepository.getUser(userName);
         String name = userRepository.getName(user);
-        printer.printContent(name);
-        printer.printContent("@"+userName);
+        if(userRepository.getAccountType(user).equals("verified")){
+            printer.printContentWithNoStyling("\u001B[34m" + name +"\u001B[0m");
+            printer.printContentWithNoStyling("\u001B[34m" + userName +"\u001B[0m");
+        }else {
+            printer.printContentWithNoStyling(name);
+            printer.printContentWithNoStyling(userName);
+        }
         if(user.getProfile().getBio()!=null){
-            printer.printContent("Bio: " + user.getProfile().getBio());
+            printer.printContentWithNoStyling("\u001B[93mBio: " + user.getProfile().getBio()+"\u001B[24m");
         }
         if(user.getProfile().getLocation()!=null){
-            printer.printContent("Location: " + user.getProfile().getLocation());
+            printer.printContentWithNoStyling("\u001B[93mLocation: " + user.getProfile().getLocation()+"\u001B[24m");
         }
-        printer.printContent(user.followingCount()+" following\t\t"+user.followersCount()+" followers");
+        printer.printContentWithNoStyling("\u001B[93m" + user.followingCount()+" following\t\t"+user.followersCount()+" followers"+"\u001B[24m");
         Map<Tweet, Map<String, String>> tweetsMap = new HashMap<>();
         Map<String, String> details = new HashMap<>();
         details.put(userName, "tweet");
@@ -57,21 +62,23 @@ public class ViewProfileCommand implements Command{
         Map<Tweet, Map<String, String>> sortedTweetsMap = new TreeMap<>(byTweet);
         sortedTweetsMap.putAll(tweetsMap);
         if(tweetsMap.size()==0){
-            printer.printContent("No tweets to display.");
+            printer.printError("No tweets to display.");
             return;
         }
-        printer.printContent("------------------Tweets------------------");
+        printer.printContentWithNoStyling("\u001B[93m------------------Tweets------------------\u001B[0m");
+        String type="normal";
         for (Map.Entry<Tweet, Map<String, String>> tweetEntry : sortedTweetsMap.entrySet()) {
             Tweet tweet = tweetEntry.getKey();
             Map<String, String> tweetDetails = tweetEntry.getValue();
             for (Map.Entry<String, String> innerEntry : tweetDetails.entrySet()) {
                 userName = innerEntry.getKey();
-                String type = innerEntry.getValue();
-                if(type.equalsIgnoreCase("retweet")){
+                type = userRepository.getAccountType(userRepository.getUser(userName));
+                String tweetType = innerEntry.getValue();
+                if(tweetType.equalsIgnoreCase("retweet")){
                     printer.printContent("@" + userName + " retweeted");
                 }
             }
-            printer.printFeed(tweet);
+            printer.printFeed(tweet,type);
         }
     }
 

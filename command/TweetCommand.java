@@ -5,7 +5,6 @@ import repository.UserRepository;
 import ui.input.GetInput;
 import ui.output.Printer;
 import validation.TweetValidator;
-import validation.UserValidator;
 
 public class TweetCommand implements Command{
     private static final String code = "tweet";
@@ -23,7 +22,7 @@ public class TweetCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         GetInput input = new GetInput();
@@ -36,7 +35,7 @@ public class TweetCommand implements Command{
                 user.getFollowers()) {
             followers.addNotifications("@" + userRepository.getUserName(user) + " tweeted");
         }
-        printer.printContent("Your tweet is successfully posted.");
+        printer.printSuccess("Your tweet is successfully posted.");
     }
 
     @Override

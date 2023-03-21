@@ -19,13 +19,13 @@ public class SignUpCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user != null){
-            printer.printContent("A user is already signed in. Sign out to proceed. Use 'signout' command.");
+            printer.printError("A user is already signed in. Sign out to proceed. Use 'signout' command.");
             return;
         }
         UserRegister userRegister = new UserRegister(userRepository, printer);
         String[] details = userRegister.userDetails();
         userRepository.registerUser(details);
-        printer.printContent("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
+        printer.printSuccess("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
     }
 
     @Override

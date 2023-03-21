@@ -22,18 +22,18 @@ public class ChatCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printContent("Signin first. Use the command 'signin'.");
+            displayMessage.printError("Signin first. Use the command 'signin'.");
             return;
         }
         String sender = userRepository.getUserName(user);
         GetInput input = new GetInput();
         String person = input.getInput("Who do you want to chat with? @");
         if(userRepository.isDeactivatedUser(userRepository.getUser(person))){
-            displayMessage.printContent("User no longer available.");
+            displayMessage.printError("User no longer available.");
             return;
         }
         if(userRepository.noUserName(person)){
-            displayMessage.printContent("No such user found.");
+            displayMessage.printError("No such user found.");
             return;
         }
         List<Message> messages = user.getMessages();

@@ -20,7 +20,7 @@ public class DeactivateCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printContent("Signin first. Use the command 'signin'.");
+            displayMessage.printError("Signin first. Use the command 'signin'.");
             return;
         }
         GetInput input = new GetInput();
@@ -29,7 +29,7 @@ public class DeactivateCommand implements Command{
             userRepository.deactivateUser(user, new Date());
             userRepository.signoutUser(user);
             displayMessage.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
-            displayMessage.printContent("Signing you out...");
+            displayMessage.printSuccess("Signing you out...");
         }
     }
 

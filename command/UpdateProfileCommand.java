@@ -20,7 +20,7 @@ public class UpdateProfileCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         UserValidator validator = new UserValidator(userRepository, printer);
@@ -29,34 +29,42 @@ public class UpdateProfileCommand implements Command{
         String changeItem = input.getInput("What do you want to update (bio, location, password)? ");
         switch (changeItem) {
             case "bio":
-                user.getProfile().setBio(input.getInput("Bio: "));
-                printer.printContent("Updated bio successfully!");
+                String bio;
+                do{
+                    bio = input.getInput("Bio: ");
+                }while (validator.isBlank(bio));
+                user.getProfile().setBio(bio);
+                printer.printSuccess("Updated bio successfully!");
                 break;
             case "location":
-                user.getProfile().setLocation(input.getInput("Location: "));
-                printer.printContent("Updated location successfully!");
+                String location;
+                do{
+                    location = input.getInput("Location: ");
+                }while (validator.isBlank(location));
+                user.getProfile().setLocation(location);
+                printer.printSuccess("Updated location successfully!");
                 break;
             case "password":
                 String oldPassword;
                 do{
                     oldPassword = input.getInput("Old password: ");
                     if(userRepository.notMatchesPassword(userName, oldPassword)){
-                        printer.printContent("Incorrect password");
+                        printer.printError("Incorrect password");
                     }
                 }while (userRepository.notMatchesPassword(userName, oldPassword));
                 String newPassword;
                 do {
                     newPassword = input.getInput("New password: ");
                     if (!userRepository.notMatchesPassword(userName, newPassword)) {
-                        printer.printContent("The new password cannot be same as the old password.");
+                        printer.printError("The new password cannot be same as the old password.");
                     }
-                }while (!userRepository.notMatchesPassword(userName, newPassword)&&!validator.validatePassword(newPassword));
+                }while (!userRepository.notMatchesPassword(userName, newPassword)&& validator.validatePassword(newPassword));
                 String confirmPassword;
                 do {
                     confirmPassword = input.getInput("Confirm Password: ");
-                }while (!validator.validatePassword(newPassword,confirmPassword));
+                }while (validator.validatePassword(newPassword, confirmPassword));
                 userRepository.updatePassword(userName, newPassword);
-                printer.printContent("Updated password successfully!");
+                printer.printSuccess("Updated password successfully!");
 
                 /*
                  automatically signs out user after changing password

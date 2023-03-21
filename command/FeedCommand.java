@@ -20,7 +20,7 @@ public class FeedCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            printer.printContent("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         Map<Tweet, Map<String, String>> tweetsMap = new HashMap<>();
@@ -34,7 +34,6 @@ public class FeedCommand implements Command{
         retweetDetails.put(userName, "retweet");
         for (Tweet retweet : user.getRetweets()){
             tweetsMap.put(retweet, retweetDetails);
-            System.out.println(tweetsMap.size());
         }
         for (User following:
              user.getFollowingUsers()) {
@@ -58,7 +57,7 @@ public class FeedCommand implements Command{
         Map<Tweet, Map<String, String>> sortedTweetsMap = new TreeMap<>(byTweet);
         sortedTweetsMap.putAll(tweetsMap);
         if(tweetsMap.size()==0){
-            printer.printContent("No tweets to display.");
+            printer.printError("No tweets to display.");
             return;
         }
         for (Map.Entry<Tweet, Map<String, String>> tweetEntry : sortedTweetsMap.entrySet()) {
@@ -71,7 +70,8 @@ public class FeedCommand implements Command{
                     printer.printContent("@" + userName + " retweeted");
                 }
             }
-            printer.printFeed(tweet);
+            String type = userRepository.getAccountType(user);
+            printer.printFeed(tweet,type);
         }
 
         printer.printContent("To like a tweet use the command 'like'.");

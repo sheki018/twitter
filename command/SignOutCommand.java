@@ -18,11 +18,11 @@ public class SignOutCommand implements Command{
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printContent("Signin first. Use the command 'signin'.");
+            displayMessage.printError("Signin first. Use the command 'signin'.");
             return;
         }
         userRepository.signoutUser(user);
-        displayMessage.printContent("See you later.");
+        displayMessage.printSuccess("See you later.");
     }
 
     @Override

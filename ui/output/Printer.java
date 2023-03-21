@@ -14,10 +14,6 @@ public class Printer {
     //@sheki - 22min
     //tweet
     private static final String DISPLAY_FORMAT_FOR_FEED = "@%s - %s\n%s\n%s comments    %s reposts   %s likes";
-    //Liked by: %s
-    //Reposted by: %s
-    //Comments: %s
-
     //@sheki - 22min
     //tweet
     //commentcount      repostcount     likecount
@@ -37,43 +33,51 @@ public class Printer {
     }
 
     public void printContent(String content){
+        printStream.println("\u001B[36m" + content + "\u001B[0m");
+    }
+    public void printError(String error){
+        printStream.println("\u001B[31m" + error + "\u001B[0m");
+    }
+    public void printSuccess(String success){
+        printStream.println("\u001B[32m" + "\u001B[1m" + success + "\u001B[21m" + "\u001B[0m");
+    }
+    public void printContentWithNoStyling(String content){
         printStream.println(content);
     }
-
     public void printMessage(Message message) {
-        printStream.printf((DISPLAY_FORMAT_FOR_CHAT), message.getUserName(), message.getMessage(), message.getMessageDate());
+        printStream.printf((DISPLAY_FORMAT_FOR_CHAT), "\u001B[1m" + message.getUserName() + "\u001B[21m", message.getMessage(), "\u001B[4m" + message.getMessageDate() + "\u001B[24m");
     }
-    public void printFeed(Tweet tweet){
-        printStream.printf((DISPLAY_FORMAT_FOR_FEED)+"\n", tweet.getUserName(), getTimeAgo(tweet.getTweetDate().getTime()), tweet.getTweet(), tweet.getCommentsCount(), tweet.getRetweetsCount(), tweet.getLikesCount());
+    public void printFeed(Tweet tweet, String type){
+        printStream.printf((DISPLAY_FORMAT_FOR_FEED)+"\n", type.equals("verified") ? "\u001B[34m" + tweet.getUserName() + "\u001B[0m" : "\u001B[93m" + tweet.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(tweet.getTweetDate().getTime()) + "\u001B[24m", tweet.getTweet(), tweet.getCommentsCount(), tweet.getRetweetsCount(), tweet.getLikesCount());
         if(tweet.getLikesCount()!=0){
-            printStream.println("Liked by: " + tweet.likedBy().toString());
+            printStream.println("\u001B[1mLiked by: " + "\u001B[21m" + tweet.likedBy().toString());
         }
         if(tweet.getRetweetsCount()!=0){
-            printStream.println("Retweeted by: " + tweet.retweetedBy().toString());
+            printStream.println("\u001B[1mRetweeted by: " + "\u001B[21m" + tweet.retweetedBy().toString());
         }
         if(tweet.getCommentsCount()!=0){
-            printStream.print("Comments:\n");
-            printComment(tweet);
+            printStream.print("\u001B[1mComments:" + "\u001B[21m\n");
+            printComment(tweet, type);
         }
         printStream.println();
     }
-    public void printComment(Tweet tweet){
+    public void printComment(Tweet tweet, String type){
         List<Comment> comments = tweet.getComments();
         comments.sort((t1,t2) -> t2.getCommentDate().compareTo(t1.getCommentDate()));
         for(Comment comment : comments) {
-            printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", comment.getUserName(), getTimeAgo(comment.getCommentDate().getTime()), comment.getComment());
+            printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", type.equals("verified") ? "\u001B[34m" + comment.getUserName() + "\u001B[0m" : "\u001B[93m" + comment.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(comment.getCommentDate().getTime()) + "\u001B[24m", comment.getComment());
         }
     }
-    public void printComment(Comment comment){
-        printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", comment.getUserName(), getTimeAgo(comment.getCommentDate().getTime()), comment.getComment());
+    public void printComment(Comment comment, String type){
+        printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n", type.equals("verified") ? "\u001B[34m" + comment.getUserName() + "\u001B[0m" : "\u001B[93m" + comment.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(comment.getCommentDate().getTime()) + "\u001B[24m", comment.getComment());
     }
 
-    public void printTweet(Tweet tweet){
-        printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n\n", tweet.getUserName(), getTimeAgo(tweet.getTweetDate().getTime()), tweet.getTweet());
+    public void printTweet(Tweet tweet, String type){
+        printStream.printf((DISPLAY_FORMAT_FOR_TWEET)+"\n\n", type.equals("verified") ? "\u001B[34m" + tweet.getUserName() + "\u001B[0m" : "\u001B[93m" + tweet.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(tweet.getTweetDate().getTime()) + "\u001B[24m", tweet.getTweet());
     }
 
     public void printNotification(Notification notification) {
-        printStream.printf((DISPLAY_FORMAT_FOR_NOTIFICATION), notification.getNotification(), getTimeAgo(notification.getNotificationDate().getTime()));
+        printStream.printf((DISPLAY_FORMAT_FOR_NOTIFICATION), "\u001B[93m" + notification.getNotification() + "\u001B[0m", "\u001B[4m" + getTimeAgo(notification.getNotificationDate().getTime()) + "\u001B[24m");
     }
 
     private static String getTimeAgo(long tweetDate) {
