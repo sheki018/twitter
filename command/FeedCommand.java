@@ -53,7 +53,7 @@ public class FeedCommand implements Command{
             }
         }
 
-        Comparator<Tweet> byTweet = (Tweet t1, Tweet t2) -> t2.getTweetDate().compareTo(t1.getTweetDate());
+        Comparator<Tweet> byTweet = (Tweet t1, Tweet t2) -> t2.getDate().compareTo(t1.getDate());
         Map<Tweet, Map<String, String>> sortedTweetsMap = new TreeMap<>(byTweet);
         sortedTweetsMap.putAll(tweetsMap);
         if(tweetsMap.size()==0){

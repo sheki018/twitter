@@ -8,19 +8,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRepository {
+    private static UserRepository instance;
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<User, String[]> userDetails = new HashMap<>();
     private final Map<User, Date> deactivatedUsers = new HashMap<>();
-    //make it more controlled - now it is accessible without verification
+    //todo make it more controlled - now it is accessible without verification
+    private UserRepository() {}
+
+    public static synchronized UserRepository getInstance() {
+        if (instance == null) {
+            instance = new UserRepository();
+        }
+        return instance;
+    }
+    //todo
     public void registerUser(String[] details){
         String userName = details[4];
         User user = new User(userName);
         userMap.put(userName, user);
         userDetails.put(user, details);
-    }
 
+    }
     public void deactivateUser(User user, Date date){
-        deactivatedUsers.put(user,date);
+        if(userDetails.containsKey(user) && getActiveUser() == user){
+            deactivatedUsers.put(user,date);
+        }
     }
 
     public boolean isDeactivatedUser(User user){
@@ -29,13 +41,16 @@ public class UserRepository {
 
     public Date deactivatedTime(User user){return deactivatedUsers.get(user);}
     public void activateUser(User user){
-        deactivatedUsers.remove(user);
+        if(userDetails.containsKey(user) && getActiveUser() == user) {
+            deactivatedUsers.remove(user);
+        }
     }
-
     public void deleteUser(User user){
-        deactivatedUsers.remove(user);
-        userMap.remove(getUserName(user));
-        userDetails.remove(user);
+        if(userDetails.containsKey(user) && getActiveUser() == user) {
+            deactivatedUsers.remove(user);
+            userMap.remove(getUserName(user));
+            userDetails.remove(user);
+        }
     }
     public boolean noUserName(String userName) {
         User user = userMap.get(userName);
@@ -47,16 +62,16 @@ public class UserRepository {
         String[] details = userDetails.get(user);
         return !password.equals(details[3]);
     }
-
     public void updateStatus(String userName) {
-        User user = userMap.get(userName);
-        userDetails.get(user)[6] = "active";
+        if(userDetails.containsKey(getUser(userName))) {
+            User user = userMap.get(userName);
+            userDetails.get(user)[6] = "active";
+        }
     }
 
     public User getUser(String userName){
         return userMap.get(userName);
     }
-
     public String getName(User user){
         String name = null;
         for(Map.Entry<User, String[]> entry: userDetails.entrySet()) {
@@ -66,7 +81,7 @@ public class UserRepository {
         }
         return name;
     }
-    public boolean getEmail(String mail){
+    public boolean hasEmail(String mail){
         for(Map.Entry<User, String[]> entry: userDetails.entrySet()) {
             if(entry.getValue()[1].equals(mail)){
                 return true;
@@ -84,10 +99,11 @@ public class UserRepository {
         }
         return user;
     }
-
     public void updatePassword(String userName, String newPassword) {
-        User user = userMap.get(userName);
-        userDetails.get(user)[3] = newPassword;
+        if(userDetails.containsKey(getUser(userName)) && getActiveUser() == getUser(userName)) {
+            User user = userMap.get(userName);
+            userDetails.get(user)[3] = newPassword;
+        }
     }
 
     public String getUserName(User user) {
@@ -102,7 +118,9 @@ public class UserRepository {
     }
 
     public void signoutUser(User user) {
-        userDetails.get(user)[6]="out";
+        if(userDetails.containsKey(user) && getActiveUser() == user) {
+            userDetails.get(user)[6] = "out";
+        }
     }
 
     public List<String> searchResults(String userName) {
@@ -125,7 +143,9 @@ public class UserRepository {
         return userDetails.get(user)[5];
     }
     public void verifyUser(User user){
-        new VerifiedUser(getUserName(user));
-        userDetails.get(user)[5]="verified";
+        if(userDetails.containsKey(user) && getActiveUser() == user) {
+            new VerifiedUser(getUserName(user));
+            userDetails.get(user)[5] = "verified";
+        }
     }
 }

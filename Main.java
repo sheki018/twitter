@@ -7,7 +7,12 @@ import java.util.Scanner;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-        UserRepository userRepository = new UserRepository();
+//        new UserRepository().registerUser(new String[]{null});
+//        new UserRepository().deactivateUser(new User(null),new Date());
+        //UserRepository.getInstance().registerUser(new String[]{null});
+        //UserRepository.getInstance().deactivateUser(new User(null),new Date());
+
+        UserRepository userRepository = UserRepository.getInstance();
         Printer printer = new Printer(System.out);
         CommandExecutor commandExecutor = new CommandExecutor(userRepository, printer);
         System.out.println("Welcome to \u001B[34m" + "Twitter" + "\u001B[0m. Create an account first. Use" + "\u001B[1m'signup'" + "\u001B[0m command.");

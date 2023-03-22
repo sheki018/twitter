@@ -1,23 +1,11 @@
 package model;
 
-import java.util.Date;
-
-public class Message {
-    private String userName;
+public class Message extends UserAction{
     private String message;
-    private Date messageDate;
-    public Message(String userName, String message){
-        this.userName = userName;
+
+    public Message(String userName, String message) {
+        super(userName);
         this.message = message;
-        this.messageDate = new Date();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getMessage() {
@@ -26,13 +14,5 @@ public class Message {
 
     public void setMessage(String tweet) {
         this.message = tweet;
-    }
-
-    public Date getMessageDate() {
-        return messageDate;
-    }
-
-    public void setMessageDate(Date tweetDate) {
-        this.messageDate = tweetDate;
     }
 }

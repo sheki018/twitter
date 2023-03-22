@@ -34,7 +34,7 @@ public class LikeCommand implements Command{
             }
             tweets.addAll(following.getTweets());
         }
-        tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
+        tweets.sort((t1,t2) -> t2.getDate().compareTo(t1.getDate()));
         if(tweets.size()==0){
             printer.printError("No tweets to display.");
             return;

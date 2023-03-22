@@ -36,7 +36,7 @@ public class EditCommand implements Command{
         }
         VerifiedUser verifiedUser = new VerifiedUser(userRepository.getUserName( activeUser));
         List<Tweet> tweets = new ArrayList<>(activeUser.getTweets());
-        tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
+        tweets.sort((t1,t2) -> t2.getDate().compareTo(t1.getDate()));
         int index = 1;
         for (Tweet tweet :
                 tweets) {

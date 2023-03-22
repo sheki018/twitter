@@ -54,7 +54,6 @@ public class SignInCommand implements Command{
             }
             if(count==3){
                 printer.printError("Try after some time!");
-                //todo dont allow the user to signin for a specific amount of time. display a message so.
                 return;
             }
         }while (userRepository.notMatchesPassword(userName, password));

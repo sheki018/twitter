@@ -1,29 +1,18 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-//tweet, message, comment, notification can have a base class
-public class Tweet {
-    private String userName;
+public class Tweet extends UserAction{
     private String tweet;
     private final List<String> likes = new ArrayList<>();
-    private Date tweetDate;
     private List<Comment> comments = new ArrayList<>();
     private final List<String> retweets = new ArrayList<>();
-    public Tweet(String userName, String tweet){
-        this.userName = userName;
+
+    public Tweet(String userName, String tweet) {
+        super(userName);
         this.tweet = tweet;
-        this.tweetDate = new Date();
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getTweet() {
         return tweet;
@@ -31,14 +20,6 @@ public class Tweet {
 
     public void setTweet(String tweet) {
         this.tweet = tweet;
-    }
-
-    public Date getTweetDate() {
-        return tweetDate;
-    }
-
-    public void setTweetDate(Date tweetDate) {
-        this.tweetDate = tweetDate;
     }
 
     public List<Comment> getComments(){

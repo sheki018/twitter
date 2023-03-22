@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 public class UserValidator extends Validator{
-
     public UserValidator(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
     }
@@ -29,7 +28,7 @@ public class UserValidator extends Validator{
     }
 
     public boolean validateEmail(String email){
-        if(userRepository.getEmail(email)){
+        if(userRepository.hasEmail(email)){
             printer.printError("This email is already associated with another account.");
             return false;
         }else if (isBlank(email)){

@@ -9,6 +9,6 @@ public class VerifiedUser extends User{
     }
     public void editTweet(Tweet tweet, String content){
         tweet.setTweet(content);
-        tweet.setTweetDate(new Date());
+        tweet.setDate(new Date());
     }
 }

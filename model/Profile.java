@@ -1,7 +1,6 @@
 package model;
 
 public class Profile {
-    // add name
     private String userName;
     private String bio = null;
     private String location = null;
@@ -9,7 +8,6 @@ public class Profile {
     public Profile(String userName){
         this.userName = userName;
     }
-
     public String getUserName() {
         return userName;
     }

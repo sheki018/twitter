@@ -94,7 +94,7 @@ public class DeleteCommand implements Command{
                 printer.printError("No tweets to display.");
                 return;
             }
-            tweets.sort((t1,t2) -> t2.getTweetDate().compareTo(t1.getTweetDate()));
+            tweets.sort((t1,t2) -> t2.getDate().compareTo(t1.getDate()));
             int index = 1;
             for (Tweet tweet:
                     tweets) {

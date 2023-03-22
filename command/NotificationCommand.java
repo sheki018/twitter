@@ -29,7 +29,7 @@ public class NotificationCommand implements Command{
             displayMessage.printError("No notifications to display.");
             return;
         }
-        notifications.sort((t1,t2) -> t2.getNotificationDate().compareTo(t1.getNotificationDate()));
+        notifications.sort((t1,t2) -> t2.getDate().compareTo(t1.getDate()));
         for (Notification notification:
              notifications) {
             displayMessage.printNotification(notification);

@@ -1,23 +1,12 @@
 package model;
 
-import java.util.Date;
 
-public class Comment {
-    private String userName;
+public class Comment extends UserAction{
     private String comment;
-    private Date commentDate;
-    public Comment(String userName, String comment){
-        this.userName = userName;
+
+    public Comment(String userName, String comment) {
+        super(userName);
         this.comment = comment;
-        this.commentDate = new Date();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getComment() {
@@ -26,13 +15,5 @@ public class Comment {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public Date getCommentDate() {
-        return commentDate;
-    }
-
-    public void setCommentDate(Date commentDate) {
-        this.commentDate = commentDate;
     }
 }
