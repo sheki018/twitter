@@ -2,18 +2,23 @@ package repository;
 
 import model.User;
 import model.VerifiedUser;
+import ui.output.Printer;
+import validation.UserValidator;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRepository {
     private static UserRepository instance;
+    private final UserValidator validator;
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<User, String[]> userDetails = new HashMap<>();
     private final Map<User, Date> deactivatedUsers = new HashMap<>();
-    //todo make it more controlled - now it is accessible without verification
-    private UserRepository() {}
+    private UserRepository() {
+        this.validator = new UserValidator(this, new Printer(System.out));
+    }
 
     public static synchronized UserRepository getInstance() {
         if (instance == null) {
@@ -21,13 +26,23 @@ public class UserRepository {
         }
         return instance;
     }
-    //todo
     public void registerUser(String[] details){
+        String name = details[0];
+        String email = details[1];
+        String dob = details[2];
+        LocalDate date = LocalDate.parse(dob);
+        int year = date.getYear();
+        int month = date.getMonthValue();
+        int day = date.getDayOfMonth();
+        String password = details[3];
         String userName = details[4];
-        User user = new User(userName);
-        userMap.put(userName, user);
-        userDetails.put(user, details);
-
+        if(validator.validateName(name)&&validator.validateEmail(email)&& validator.validateDay(day)&&
+                validator.validateMonth(month)&& validator.validateYear(year)&&validator.validateUserName(userName)&&
+                validator.validatePassword(password)&&details[5].equals("normal")&&details[6].equals("out")) {
+            User user = new User(userName);
+            userMap.put(userName, user);
+            userDetails.put(user, details);
+        }
     }
     public void deactivateUser(User user, Date date){
         if(userDetails.containsKey(user) && getActiveUser() == user){
