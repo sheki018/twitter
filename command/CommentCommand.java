@@ -67,7 +67,7 @@ public class CommentCommand implements Command{
         String comment;
         do {
             comment = input.getInput("Your comment: ");
-        }while (!validator.validateTweet(comment));
+        }while (validator.validateTweet(comment));
         tweets.get(tweetIndex-1).commentTweet(userRepository.getUserName(user), comment);
         String userName = tweets.get(tweetIndex-1).getUserName();
         if(!userName.equalsIgnoreCase(userRepository.getUserName(user))){

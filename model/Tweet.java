@@ -7,10 +7,10 @@ import java.util.List;
 public class Tweet {
     private String userName;
     private String tweet;
-    private List<String> likes = new ArrayList<>();
+    private final List<String> likes = new ArrayList<>();
     private Date tweetDate;
     private List<Comment> comments = new ArrayList<>();
-    private List<String> retweets = new ArrayList<>();
+    private final List<String> retweets = new ArrayList<>();
     public Tweet(String userName, String tweet){
         this.userName = userName;
         this.tweet = tweet;

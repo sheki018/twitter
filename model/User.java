@@ -9,8 +9,8 @@ public class User {
     protected List<Tweet> tweets = new ArrayList<>();
     private List<User> followingUsers = new ArrayList<>();
     private List<User> followers = new ArrayList<>();
-    private List<Message> messages = new ArrayList<>();
-    private List<Notification> notifications = new ArrayList<>();
+    private final List<Message> messages = new ArrayList<>();
+    private final List<Notification> notifications = new ArrayList<>();
     private List<Tweet> retweets = new ArrayList<>();
 
     private Profile profile;

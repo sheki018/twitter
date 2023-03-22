@@ -31,7 +31,7 @@ public class UserRepository {
     public void activateUser(User user){
         deactivatedUsers.remove(user);
     }
-    // todo use thread to delete users permanently in the background
+
     public void deleteUser(User user){
         deactivatedUsers.remove(user);
         userMap.remove(getUserName(user));
@@ -125,7 +125,7 @@ public class UserRepository {
         return userDetails.get(user)[5];
     }
     public void verifyUser(User user){
-        VerifiedUser verifiedUser = new VerifiedUser(getUserName(user));
+        new VerifiedUser(getUserName(user));
         userDetails.get(user)[5]="verified";
     }
 }

@@ -29,7 +29,7 @@ public class TweetCommand implements Command{
         String tweet;
         do {
             tweet = input.getInput("What's in your mind? ");
-        }while ((!validator.validateTweetLength(tweet, user)) || (!validator.validateTweet(tweet)));
+        }while ((!validator.validateTweetLength(tweet, user)) || (validator.validateTweet(tweet)));
         user.addTweet(tweet);
         for (User followers:
                 user.getFollowers()) {
