@@ -4,18 +4,14 @@ import model.User;
 import repository.UserRepository;
 import ui.output.Printer;
 
-public class TweetValidator {
-    private final UserRepository userRepository;
-    private final Printer printer;
-
-    public TweetValidator(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+public class TweetValidator extends Validator{
+    public TweetValidator(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     public boolean validateTweet(String tweet){
         if(isBlank(tweet)){
-            printer.printError("Cannot be empty");
+            super.printer.printError("Cannot be empty");
             return true;
         }
         return false;
@@ -33,8 +29,5 @@ public class TweetValidator {
             }
         }
         return true;
-    }
-    private boolean isBlank(String input){
-        return input.trim().isEmpty();
     }
 }

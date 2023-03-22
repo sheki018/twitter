@@ -3,7 +3,7 @@ package command;
 import model.Tweet;
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.*;
@@ -25,7 +25,7 @@ public class ViewProfileCommand implements Command{
             printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String userName = input.getInput("Provide the username of the user's profile you want to see: ");
         if(userRepository.noUserName(userName)|| userRepository.isDeactivatedUser(userRepository.getUser(userName))){
             printer.printError("There is no account named " + userName + " .");

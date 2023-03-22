@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.UserValidator;
 
@@ -25,7 +25,7 @@ public class UpdateProfileCommand implements Command{
         }
         UserValidator validator = new UserValidator(userRepository, printer);
         String userName = userRepository.getUserName(user);
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String changeItem = input.getInput("What do you want to update (bio, location, password)? ");
         switch (changeItem) {
             case "bio":

@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.UserValidator;
 
@@ -25,7 +25,7 @@ public class SignInCommand implements Command{
             printer.printError("A user is already signed in. Sign out to proceed. Use 'signout' command.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String userName = input.getInput("User Name: ");
         String password;
         if(validator.isBlank(userName)){

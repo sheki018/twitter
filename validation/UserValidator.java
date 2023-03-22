@@ -8,15 +8,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+public class UserValidator extends Validator{
 
-public class UserValidator {
-    private final UserRepository userRepository;
-    private final Printer printer;
-
-    public UserValidator(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public UserValidator(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     public boolean validateName(String name){
         if(isBlank(name)){
             printer.printError("Name cannot be empty.");
@@ -111,9 +108,6 @@ public class UserValidator {
             return false;
         }
         return true;
-    }
-    public boolean isBlank(String input){
-        return input.trim().isEmpty();
     }
     private boolean matchRegex(String regex, String input){
         Pattern p = Pattern.compile(regex);

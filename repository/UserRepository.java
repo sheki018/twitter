@@ -11,7 +11,7 @@ public class UserRepository {
     private final Map<String, User> userMap = new HashMap<>();
     private final Map<User, String[]> userDetails = new HashMap<>();
     private final Map<User, Date> deactivatedUsers = new HashMap<>();
-
+    //make it more controlled - now it is accessible without verification
     public void registerUser(String[] details){
         String userName = details[4];
         User user = new User(userName);

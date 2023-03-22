@@ -4,7 +4,7 @@ import model.Comment;
 import model.Tweet;
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class DeleteCommand implements Command{
             printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String option = input.getInput("What do you want to delete? (tweet/comment) ");
         if(option.equalsIgnoreCase("comment")){
             List<Tweet> myCommentedTweets = new ArrayList<>();

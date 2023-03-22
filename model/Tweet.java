@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+//tweet, message, comment, notification can have a base class
 public class Tweet {
     private String userName;
     private String tweet;

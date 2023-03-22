@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class SearchCommand implements Command{
             printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String userNameToSearch = input.getInput("Username: ");
         List<String> users = userRepository.searchResults(userNameToSearch);
         if(users.size()==0){

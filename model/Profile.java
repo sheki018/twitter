@@ -1,6 +1,7 @@
 package model;
 
 public class Profile {
+    // add name
     private String userName;
     private String bio = null;
     private String location = null;

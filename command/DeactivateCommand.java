@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.Date;
@@ -23,7 +23,7 @@ public class DeactivateCommand implements Command{
             displayMessage.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String reply = input.getInput("Are you sure you want to deactivate your account?(yes/no) ");
         if(reply.equalsIgnoreCase("yes")){
             userRepository.deactivateUser(user, new Date());

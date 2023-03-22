@@ -3,7 +3,7 @@ package command;
 import model.Tweet;
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.TweetValidator;
 
@@ -50,7 +50,7 @@ public class CommentCommand implements Command{
             printer.printTweet(tweet, type);
             index++;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         int tweetIndex=Integer.MAX_VALUE;
         do {
             try {

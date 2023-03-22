@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class UserRegister {
-    private static final GetInput input = new GetInput();
+    private static final UserInputScanner input = new UserInputScanner();
     private final UserRepository userRepository;
     private final Printer printer;
     public UserRegister(UserRepository userRepository, Printer printer){
@@ -59,7 +59,10 @@ public class UserRegister {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
         dob = date.format(formatter);
         do {
-            printer.printContent("Password policy: Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^). It should not contain any white space. It should be at least 8 characters long and at most 20 characters long.");
+            printer.printContent("Password policy:\n" +
+                    "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^).\n" +
+                    "It should not contain any white space.\n" +
+                    "It should be at least 8 characters long and at most 20 characters long.");
             password = input.getInput("Password: ");
         }while(validator.validatePassword(password));
         do {

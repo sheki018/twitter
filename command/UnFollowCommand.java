@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class UnFollowCommand implements Command {
             followingUserNames.add(userRepository.getUserName(person));
         }
         printer.printContent("You are following: " + followingUserNames);
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String userName = input.getInput("Who do you want to unfollow? @");
         if(userName.equals("")){
             return;

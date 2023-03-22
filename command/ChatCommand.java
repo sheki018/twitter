@@ -3,7 +3,7 @@ package command;
 import model.Message;
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.List;
@@ -26,7 +26,7 @@ public class ChatCommand implements Command{
             return;
         }
         String sender = userRepository.getUserName(user);
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String person = input.getInput("Who do you want to chat with? @");
         if(userRepository.isDeactivatedUser(userRepository.getUser(person))){
             displayMessage.printError("User no longer available.");

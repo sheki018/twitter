@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.TweetValidator;
 
@@ -25,7 +25,7 @@ public class TweetCommand implements Command{
             printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String tweet;
         do {
             tweet = input.getInput("What's in your mind? ");

@@ -2,7 +2,7 @@ package command;
 
 import model.User;
 import repository.UserRepository;
-import ui.input.GetInput;
+import ui.input.UserInputScanner;
 import ui.output.Printer;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public class FollowCommand implements Command{
             printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
-        GetInput input = new GetInput();
+        UserInputScanner input = new UserInputScanner();
         String userName = input.getInput("Who do you want to follow? @");
         if(userName.equals("")){
             return;
