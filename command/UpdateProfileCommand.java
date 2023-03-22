@@ -58,7 +58,7 @@ public class UpdateProfileCommand implements Command{
                     if (!userRepository.notMatchesPassword(userName, newPassword)) {
                         printer.printError("The new password cannot be same as the old password.");
                     }
-                }while (!userRepository.notMatchesPassword(userName, newPassword)&& validator.validatePassword(newPassword));
+                }while (!userRepository.notMatchesPassword(userName, newPassword) || validator.validatePassword(newPassword));
                 String confirmPassword;
                 do {
                     confirmPassword = input.getInput("Confirm Password: ");

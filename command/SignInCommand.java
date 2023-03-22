@@ -37,7 +37,7 @@ public class SignInCommand implements Command{
             if(option.equalsIgnoreCase("no")){
                 return;
             }
-        }else{
+        }else if(userRepository.isDeactivatedUser(userRepository.getUser(userName))&&new Date().getTime()/60000-userRepository.deactivatedTime(userRepository.getUser(userName)).getTime()/60000>10){
             userRepository.deleteUser(userRepository.getUser(userName));
         }
         if(userRepository.noUserName(userName)){

@@ -70,7 +70,7 @@ public class FeedCommand implements Command{
                     printer.printContent("@" + userName + " retweeted");
                 }
             }
-            String type = userRepository.getAccountType(user);
+            String type = userRepository.getAccountType(userRepository.getUser(userName));
             printer.printFeed(tweet,type);
         }
 
