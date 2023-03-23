@@ -61,7 +61,7 @@ public class UserRegister {
         System.out.println(dob);
         do {
             printer.printContent("Password policy:\n" +
-                    "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^).\n" +
+                    "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(@#$%^&+=).\n" +
                     "It should not contain any white space.\n" +
                     "It should be at least 8 characters long and at most 20 characters long.");
             password = input.getInput("Password: ");
