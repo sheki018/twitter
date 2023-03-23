@@ -34,11 +34,11 @@ public class ViewProfileCommand implements Command{
         User user = userRepository.getUser(userName);
         String name = userRepository.getName(user);
         if(userRepository.getAccountType(user).equals("verified")){
-            printer.printContentWithNoStyling("\u001B[34m" + name +"\u001B[0m");
-            printer.printContentWithNoStyling("\u001B[34m" + userName +"\u001B[0m");
+            printer.printContentWithNoStyling("\u001B[34m" + name + "\u001B[0m");
+            printer.printContentWithNoStyling("\u001B[34m" + userName + "\u001B[0m");
         }else {
-            printer.printContentWithNoStyling(name);
-            printer.printContentWithNoStyling(userName);
+            printer.printContentWithNoStyling("\u001B[93m" + name + "\u001B[0m");
+            printer.printContentWithNoStyling("\u001B[93m" + userName + "\u001B[0m");
         }
         if(user.getProfile().getBio()!=null){
             printer.printContentWithNoStyling("\u001B[93mBio: " + user.getProfile().getBio()+"\u001B[24m");
