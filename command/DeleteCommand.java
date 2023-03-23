@@ -10,15 +10,13 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteCommand implements Command{
+public class DeleteCommand extends BaseCommand implements Command{
     private static final String code = "delete";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public DeleteCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public DeleteCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();

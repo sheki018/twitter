@@ -5,24 +5,22 @@ import repository.UserRepository;
 import ui.output.Printer;
 
 
-public class SignOutCommand implements Command{
+public class SignOutCommand extends BaseCommand implements Command{
     private static final String code = "signout";
-    private final UserRepository userRepository;
-    private final Printer displayMessage;
 
-    public SignOutCommand(UserRepository userRepository, Printer displayMessage){
-        this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+    public SignOutCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printError("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         userRepository.signoutUser(user);
-        displayMessage.printSuccess("See you later.");
+        printer.printSuccess("See you later.");
     }
 
     @Override

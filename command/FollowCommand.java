@@ -7,14 +7,11 @@ import ui.output.Printer;
 
 import java.util.List;
 
-public class FollowCommand implements Command{
+public class FollowCommand extends BaseCommand implements Command{
     private static final String code = "follow";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public FollowCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public FollowCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

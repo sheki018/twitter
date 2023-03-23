@@ -8,14 +8,11 @@ import ui.output.Printer;
 
 import java.util.*;
 
-public class ViewProfileCommand implements Command{
+public class ViewProfileCommand extends BaseCommand implements Command{
     private static final String code = "profile";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public ViewProfileCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public ViewProfileCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

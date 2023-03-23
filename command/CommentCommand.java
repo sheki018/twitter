@@ -10,15 +10,12 @@ import validation.TweetValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentCommand implements Command{
+public class CommentCommand extends BaseCommand implements Command{
     private static final String code = "comment";
-    private final UserRepository userRepository;
-    private final Printer printer;
     private final TweetValidator validator;
 
-    public CommentCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public CommentCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
         this.validator=new TweetValidator(userRepository, printer);
     }
 

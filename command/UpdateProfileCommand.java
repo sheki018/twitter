@@ -6,14 +6,11 @@ import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.UserValidator;
 
-public class UpdateProfileCommand implements Command{
+public class UpdateProfileCommand extends BaseCommand implements Command{
     private static final String code = "update";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public UpdateProfileCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public UpdateProfileCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

@@ -6,15 +6,12 @@ import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.TweetValidator;
 
-public class TweetCommand implements Command{
+public class TweetCommand extends BaseCommand implements Command{
     private static final String code = "tweet";
-    private final UserRepository userRepository;
-    private final Printer printer;
     private final TweetValidator validator;
 
-    public TweetCommand(UserRepository userRepository, Printer displayMessage){
-        this.userRepository = userRepository;
-        this.printer = displayMessage;
+    public TweetCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
         this.validator = new TweetValidator(userRepository, printer);
     }
 

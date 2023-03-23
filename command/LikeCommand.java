@@ -9,14 +9,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LikeCommand implements Command{
+public class LikeCommand extends BaseCommand implements Command{
     private static final String code = "like";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public LikeCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public LikeCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

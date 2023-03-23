@@ -7,15 +7,13 @@ import ui.output.Printer;
 
 import java.util.*;
 
-public class FeedCommand implements Command{
+public class FeedCommand extends BaseCommand implements Command{
     private static final String code = "feed";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public FeedCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public FeedCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();

@@ -8,15 +8,13 @@ import validation.UserValidator;
 
 import java.util.Date;
 
-public class SignInCommand implements Command{
+public class SignInCommand extends BaseCommand implements Command{
     private static final String code = "signin";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public SignInCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public SignInCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         UserValidator validator = new UserValidator(userRepository, printer);

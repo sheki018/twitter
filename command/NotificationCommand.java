@@ -7,32 +7,29 @@ import ui.output.Printer;
 
 import java.util.List;
 
-public class NotificationCommand implements Command{
+public class NotificationCommand extends BaseCommand implements Command{
     private static final String code = "notification";
-    private final UserRepository userRepository;
-    private final Printer displayMessage;
 
-    public NotificationCommand(UserRepository userRepository, Printer displayMessage){
-        this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+    public NotificationCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printError("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         List<Notification> notifications = user.viewNotifications();
         if(notifications.size()==0){
-            displayMessage.printError("No notifications to display.");
+            printer.printError("No notifications to display.");
             return;
         }
         notifications.sort((t1,t2) -> t2.getDate().compareTo(t1.getDate()));
         for (Notification notification:
              notifications) {
-            displayMessage.printNotification(notification);
+            printer.printNotification(notification);
         }
     }
 

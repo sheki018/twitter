@@ -5,14 +5,11 @@ import repository.UserRepository;
 import ui.input.UserRegister;
 import ui.output.Printer;
 
-public class SignUpCommand implements Command{
+public class SignUpCommand extends BaseCommand implements Command{
     private static final String code = "signup";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public SignUpCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public SignUpCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

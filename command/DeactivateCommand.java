@@ -7,20 +7,18 @@ import ui.output.Printer;
 
 import java.util.Date;
 
-public class DeactivateCommand implements Command{
+public class DeactivateCommand extends BaseCommand implements Command{
     private static final String code = "deactivate";
-    private final UserRepository userRepository;
-    private final Printer displayMessage;
 
-    public DeactivateCommand(UserRepository userRepository, Printer displayMessage){
-        this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+    public DeactivateCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printError("Signin first. Use the command 'signin'.");
+            printer.printError("Signin first. Use the command 'signin'.");
             return;
         }
         UserInputScanner input = new UserInputScanner();
@@ -28,8 +26,8 @@ public class DeactivateCommand implements Command{
         if(reply.equalsIgnoreCase("yes")){
             userRepository.deactivateUser(user, new Date());
             userRepository.signoutUser(user);
-            displayMessage.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
-            displayMessage.printSuccess("Signing you out...");
+            printer.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
+            printer.printSuccess("Signing you out...");
         }
     }
 

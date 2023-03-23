@@ -6,14 +6,11 @@ import ui.input.UserInputScanner;
 import ui.output.Printer;
 import java.util.List;
 
-public class SearchCommand implements Command{
+public class SearchCommand extends BaseCommand implements Command{
     private static final String code = "search";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public SearchCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public SearchCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

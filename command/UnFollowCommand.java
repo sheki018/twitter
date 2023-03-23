@@ -8,14 +8,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnFollowCommand implements Command {
+public class UnFollowCommand extends BaseCommand implements Command {
     private static final String code = "unfollow";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public UnFollowCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public UnFollowCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

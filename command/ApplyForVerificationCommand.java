@@ -4,37 +4,34 @@ import model.User;
 import repository.UserRepository;
 import ui.output.Printer;
 
-public class ApplyForVerificationCommand implements Command{
+public class ApplyForVerificationCommand extends BaseCommand implements Command{
     private static final String code = "apply";
-    private final UserRepository userRepository;
-    private final Printer displayMessage;
-
-    public ApplyForVerificationCommand(UserRepository userRepository, Printer displayMessage){
-        this.userRepository = userRepository;
-        this.displayMessage = displayMessage;
+    public ApplyForVerificationCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
+
     @Override
     public void execute(String command) {
         User user = userRepository.getActiveUser();
         if(user == null){
-            displayMessage.printContent("Signin first. Use the command 'signin'.");
+            printer.printContent("Signin first. Use the command 'signin'.");
             return;
         }
         if(userRepository.getAccountType(user).equals("verified")){
-            displayMessage.printContent("You are already verified!");
+            printer.printContent("You are already verified!");
             return;
         }
         if(user.getTweets().size()<5){
-            displayMessage.printContent("You are not eligible.");
+            printer.printContent("You are not eligible.");
             return;
         }
         if(user.getProfile().getBio()==null||user.getProfile().getLocation()==null){
-            displayMessage.printContent("You are not eligible.");
+            printer.printContent("You are not eligible.");
             return;
         }
         userRepository.verifyUser(user);
         user.addNotifications("You are now a verified user!");
-        displayMessage.printContent("Hurray! You are a verified user now!");
+        printer.printContent("Hurray! You are a verified user now!");
     }
 
     @Override

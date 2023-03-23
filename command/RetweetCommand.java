@@ -9,14 +9,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetweetCommand implements Command{
+public class RetweetCommand extends BaseCommand implements Command{
     private static final String code = "retweet";
-    private final UserRepository userRepository;
-    private final Printer printer;
 
-    public RetweetCommand(UserRepository userRepository, Printer printer){
-        this.userRepository = userRepository;
-        this.printer = printer;
+    public RetweetCommand(UserRepository userRepository, Printer printer) {
+        super(userRepository, printer);
     }
 
     @Override

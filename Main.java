@@ -1,7 +1,6 @@
 import command.CommandExecutor;
 import repository.UserRepository;
 import ui.output.Printer;
-
 import java.util.Scanner;
 
 public class Main {
