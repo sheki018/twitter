@@ -58,6 +58,7 @@ public class UserRegister {
         LocalDate date = LocalDate.of(year, month, day);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyy");
         dob = date.format(formatter);
+        System.out.println(dob);
         do {
             printer.printContent("Password policy:\n" +
                     "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character(!@#$%&*()-+=^).\n" +

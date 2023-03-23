@@ -6,6 +6,7 @@ import ui.output.Printer;
 import validation.UserValidator;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,10 +31,11 @@ public class UserRepository {
         String name = details[0];
         String email = details[1];
         String dob = details[2];
-        LocalDate date = LocalDate.parse(dob);
-        int year = date.getYear();
-        int month = date.getMonthValue();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate date = LocalDate.parse(dob, formatter);
         int day = date.getDayOfMonth();
+        int month = date.getMonthValue();
+        int year = date.getYear();
         String password = details[3];
         String userName = details[4];
         if(validator.validateName(name)&&validator.validateEmail(email)&& validator.validateDay(day)&&
