@@ -9,11 +9,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LikeCommand extends BaseCommand implements Command{
-    private static final String code = "like";
+public class LikeCommand extends Command {
 
     public LikeCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "like";
     }
 
     @Override
@@ -71,13 +71,5 @@ public class LikeCommand extends BaseCommand implements Command{
             }
             printer.printSuccess("Reaction saved.");
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

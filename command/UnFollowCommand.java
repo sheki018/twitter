@@ -8,11 +8,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UnFollowCommand extends BaseCommand implements Command {
-    private static final String code = "unfollow";
+public class UnFollowCommand extends Command{
 
     public UnFollowCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "unfollow";
     }
 
     @Override
@@ -62,13 +62,5 @@ public class UnFollowCommand extends BaseCommand implements Command {
             userToUnFollow.removeFollowers(user);
         }
         printer.printSuccess("You unfollowed @" + userName + ".");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

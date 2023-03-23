@@ -10,13 +10,13 @@ import validation.TweetValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentCommand extends BaseCommand implements Command{
-    private static final String code = "comment";
+public class CommentCommand extends Command{
     private final TweetValidator validator;
 
     public CommentCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
         this.validator=new TweetValidator(userRepository, printer);
+        this.code = "comment";
     }
 
     @Override
@@ -71,13 +71,5 @@ public class CommentCommand extends BaseCommand implements Command{
             userRepository.getUser(userName).addNotifications("@"+userRepository.getUserName(user)+" commented on your tweet");
         }
         printer.printSuccess("Comment saved.");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

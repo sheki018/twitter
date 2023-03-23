@@ -7,11 +7,11 @@ import ui.output.Printer;
 
 import java.util.Date;
 
-public class DeactivateCommand extends BaseCommand implements Command{
-    private static final String code = "deactivate";
+public class DeactivateCommand extends Command{
 
     public DeactivateCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "deactivate";
     }
 
     @Override
@@ -29,13 +29,5 @@ public class DeactivateCommand extends BaseCommand implements Command{
             printer.printContent("If you don't signin to your account in another 10 min your account will be permanently deleted.");
             printer.printSuccess("Signing you out...");
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

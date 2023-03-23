@@ -6,11 +6,11 @@ import ui.input.UserInputScanner;
 import ui.output.Printer;
 import java.util.List;
 
-public class SearchCommand extends BaseCommand implements Command{
-    private static final String code = "search";
+public class SearchCommand extends Command {
 
     public SearchCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "search";
     }
 
     @Override
@@ -30,13 +30,5 @@ public class SearchCommand extends BaseCommand implements Command{
             printer.printSuccess(users.toString());
         }
         printer.printContent("To view or follow these users you can use the commands 'profile' or 'follow'.");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

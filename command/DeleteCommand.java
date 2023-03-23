@@ -10,11 +10,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeleteCommand extends BaseCommand implements Command{
-    private static final String code = "delete";
+public class DeleteCommand extends Command{
 
     public DeleteCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "delete";
     }
 
     @Override
@@ -118,13 +118,5 @@ public class DeleteCommand extends BaseCommand implements Command{
         }else{
             printer.printError("Choose either tweet or comment.");
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

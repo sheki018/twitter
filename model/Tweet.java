@@ -13,7 +13,6 @@ public class Tweet extends UserAction{
         this.tweet = tweet;
     }
 
-
     public String getTweet() {
         return tweet;
     }

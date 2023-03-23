@@ -30,7 +30,7 @@ public class CommandExecutor {
         commands.add(new ApplyForVerificationCommand(userRepository, printer));
         commands.add(new DeactivateCommand(userRepository, printer));
         commands.add(new SignOutCommand(userRepository, printer));
-        this.invalidCommand = new InvalidCommand(printer);
+        this.invalidCommand = new InvalidCommand(userRepository, printer);
     }
 
     public void executeCommand(String commandInput){

@@ -7,11 +7,11 @@ import ui.output.Printer;
 
 import java.util.*;
 
-public class FeedCommand extends BaseCommand implements Command{
-    private static final String code = "feed";
+public class FeedCommand extends Command{
 
     public FeedCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "feed";
     }
 
     @Override
@@ -75,13 +75,5 @@ public class FeedCommand extends BaseCommand implements Command{
         printer.printContent("To like a tweet use the command 'like'.");
         printer.printContent("To comment on a tweet use the command 'comment'.");
         printer.printContent("To retweet a tweet use the command 'retweet'.");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

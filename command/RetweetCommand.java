@@ -9,11 +9,11 @@ import ui.output.Printer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RetweetCommand extends BaseCommand implements Command{
-    private static final String code = "retweet";
+public class RetweetCommand extends Command {
 
     public RetweetCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "retweet";
     }
 
     @Override
@@ -72,13 +72,5 @@ public class RetweetCommand extends BaseCommand implements Command{
             }
             printer.printSuccess("Reposted.");
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

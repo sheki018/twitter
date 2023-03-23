@@ -11,15 +11,14 @@ import validation.TweetValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditCommand extends BaseCommand implements Command{
-    private static final String code = "edit";
+public class EditCommand extends Command{
     private final TweetValidator tweetValidator;
 
     public EditCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
         this.tweetValidator = new TweetValidator(userRepository, printer);
+        this.code = "edit";
     }
-
 
     @Override
     public void execute(String command) {
@@ -62,13 +61,5 @@ public class EditCommand extends BaseCommand implements Command{
         verifiedUser.editTweet(tweets.get(tweetIndex - 1), content);
         printer.printSuccess("Tweet edited.");
 
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

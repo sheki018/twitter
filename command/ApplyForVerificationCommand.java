@@ -4,10 +4,10 @@ import model.User;
 import repository.UserRepository;
 import ui.output.Printer;
 
-public class ApplyForVerificationCommand extends BaseCommand implements Command{
-    private static final String code = "apply";
+public class ApplyForVerificationCommand extends Command{
     public ApplyForVerificationCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "apply";
     }
 
     @Override
@@ -32,13 +32,5 @@ public class ApplyForVerificationCommand extends BaseCommand implements Command{
         userRepository.verifyUser(user);
         user.addNotifications("You are now a verified user!");
         printer.printContent("Hurray! You are a verified user now!");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

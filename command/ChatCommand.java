@@ -8,11 +8,11 @@ import ui.output.Printer;
 
 import java.util.List;
 
-public class ChatCommand extends BaseCommand implements Command{
-    private static final String code = "chat";
+public class ChatCommand extends Command{
 
     public ChatCommand(UserRepository userRepository, Printer displayMessage){
         super(userRepository, displayMessage);
+        this.code = "chat";
     }
 
     @Override
@@ -56,13 +56,5 @@ public class ChatCommand extends BaseCommand implements Command{
         receiver.addMessage(sender, message);
         user.addMessage(sender, message);
         receiver.addNotifications("@"+sender+" sent you a message");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

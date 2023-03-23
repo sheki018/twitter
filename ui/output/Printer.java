@@ -45,7 +45,7 @@ public class Printer {
         printStream.println(content);
     }
     public void printMessage(Message message) {
-        printStream.printf((DISPLAY_FORMAT_FOR_CHAT), "\u001B[1m" + message.getUserName() + "\u001B[21m", message.getMessage(), "\u001B[4m" + message.getDate() + "\u001B[24m");
+        printStream.printf((DISPLAY_FORMAT_FOR_CHAT), "\u001B[1m" + message.getUserName() + "\u001B[21m" + "\u001B[0m", message.getMessage(), "\u001B[4m" + message.getDate() + "\u001B[24m" + "\u001B[0m");
     }
     public void printFeed(Tweet tweet, String type){
         printStream.printf((DISPLAY_FORMAT_FOR_FEED)+"\n", type.equals("verified") ? "\u001B[34m" + tweet.getUserName() + "\u001B[0m" : "\u001B[93m" + tweet.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(tweet.getDate().getTime()) + "\u001B[24m", tweet.getTweet(), tweet.getCommentsCount(), tweet.getRetweetsCount(), tweet.getLikesCount());

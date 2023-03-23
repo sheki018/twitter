@@ -5,11 +5,10 @@ import repository.UserRepository;
 import ui.input.UserRegister;
 import ui.output.Printer;
 
-public class SignUpCommand extends BaseCommand implements Command{
-    private static final String code = "signup";
-
+public class SignUpCommand extends Command {
     public SignUpCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "signup";
     }
 
     @Override
@@ -24,13 +23,5 @@ public class SignUpCommand extends BaseCommand implements Command{
         String[] details = userRegister.userDetails();
         userRepository.registerUser(details);
         printer.printSuccess("Account has been successfully created! Sign in to continue. Use the command 'signin'.");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

@@ -6,10 +6,6 @@ import java.util.Scanner;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     public static void main(String[] args) {
-//        new UserRepository().registerUser(new String[]{null});
-//        new UserRepository().deactivateUser(new User(null),new Date());
-        //UserRepository.getInstance().registerUser(new String[]{null,null,null,null,null,null,null});
-        //UserRepository.getInstance().deactivateUser(new User(null),new Date());
 
         UserRepository userRepository = UserRepository.getInstance();
         Printer printer = new Printer(System.out);

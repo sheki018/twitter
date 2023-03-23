@@ -8,11 +8,11 @@ import validation.UserValidator;
 
 import java.util.Date;
 
-public class SignInCommand extends BaseCommand implements Command{
-    private static final String code = "signin";
+public class SignInCommand extends Command{
 
     public SignInCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "signin";
     }
 
     @Override
@@ -82,13 +82,5 @@ public class SignInCommand extends BaseCommand implements Command{
                 "18. 'signout' - to signout of your account\n\n" +
                 "Exclusive command available for verified users\n" +
                 "19. 'edit' - to edit a tweet\n");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

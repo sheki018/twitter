@@ -8,11 +8,11 @@ import ui.output.Printer;
 
 import java.util.*;
 
-public class ViewProfileCommand extends BaseCommand implements Command{
-    private static final String code = "profile";
+public class ViewProfileCommand extends Command {
 
     public ViewProfileCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "profile";
     }
 
     @Override
@@ -77,13 +77,5 @@ public class ViewProfileCommand extends BaseCommand implements Command{
             }
             printer.printFeed(tweet,type);
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

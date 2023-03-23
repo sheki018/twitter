@@ -6,11 +6,11 @@ import ui.input.UserInputScanner;
 import ui.output.Printer;
 import validation.UserValidator;
 
-public class UpdateProfileCommand extends BaseCommand implements Command{
-    private static final String code = "update";
+public class UpdateProfileCommand extends Command{
 
     public UpdateProfileCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "update";
     }
 
     @Override
@@ -71,17 +71,9 @@ public class UpdateProfileCommand extends BaseCommand implements Command{
 
                 break;
             default:
-                InvalidCommand invalidCommand = new InvalidCommand(printer);
+                InvalidCommand invalidCommand = new InvalidCommand(userRepository, printer);
                 invalidCommand.execute(changeItem);
                 break;
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

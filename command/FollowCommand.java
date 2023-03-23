@@ -7,11 +7,11 @@ import ui.output.Printer;
 
 import java.util.List;
 
-public class FollowCommand extends BaseCommand implements Command{
-    private static final String code = "follow";
+public class FollowCommand extends Command{
 
     public FollowCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "follow";
     }
 
     @Override
@@ -44,13 +44,5 @@ public class FollowCommand extends BaseCommand implements Command{
         userToFollow.addFollowers(user);
         userToFollow.addNotifications("@"+userRepository.getUserName(user)+" follows you");
         printer.printSuccess("You are now following " + userName + ".");
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }

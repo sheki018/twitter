@@ -7,11 +7,11 @@ import ui.output.Printer;
 
 import java.util.List;
 
-public class NotificationCommand extends BaseCommand implements Command{
-    private static final String code = "notification";
+public class NotificationCommand extends Command {
 
     public NotificationCommand(UserRepository userRepository, Printer printer) {
         super(userRepository, printer);
+        this.code = "notification";
     }
 
     @Override
@@ -31,13 +31,5 @@ public class NotificationCommand extends BaseCommand implements Command{
              notifications) {
             printer.printNotification(notification);
         }
-    }
-
-    @Override
-    public boolean matches(String input) {
-        if(input!=null && !input.isEmpty()){
-            return input.trim().equalsIgnoreCase(code);
-        }
-        return false;
     }
 }
