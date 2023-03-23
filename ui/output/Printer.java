@@ -50,13 +50,13 @@ public class Printer {
     public void printFeed(Tweet tweet, String type){
         printStream.printf((DISPLAY_FORMAT_FOR_FEED)+"\n", type.equals("verified") ? "\u001B[34m" + tweet.getUserName() + "\u001B[0m" : "\u001B[93m" + tweet.getUserName() + "\u001B[0m", "\u001B[4m" + getTimeAgo(tweet.getDate().getTime()) + "\u001B[24m", tweet.getTweet(), tweet.getCommentsCount(), tweet.getRetweetsCount(), tweet.getLikesCount());
         if(tweet.getLikesCount()!=0){
-            printStream.println("\u001B[1mLiked by: " + "\u001B[21m" + tweet.likedBy().toString());
+            printStream.println("\u001B[1mLiked by: " + "\u001B[21m" + "\u001B[0m" + tweet.likedBy().toString());
         }
         if(tweet.getRetweetsCount()!=0){
-            printStream.println("\u001B[1mRetweeted by: " + "\u001B[21m" + tweet.retweetedBy().toString());
+            printStream.println("\u001B[1mRetweeted by: " + "\u001B[21m" + "\u001B[0m" + tweet.retweetedBy().toString());
         }
         if(tweet.getCommentsCount()!=0){
-            printStream.print("\u001B[1mComments:" + "\u001B[21m\n");
+            printStream.print("\u001B[1mComments:" + "\u001B[21m" + "\u001B[0m" + "\n");
             printComment(tweet, type);
         }
         printStream.println();

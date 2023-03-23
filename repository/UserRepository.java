@@ -40,10 +40,12 @@ public class UserRepository {
         String userName = details[4];
         if(validator.validateName(name)&&validator.validateEmail(email)&& validator.validateDay(day)&&
                 validator.validateMonth(month)&& validator.validateYear(year)&&validator.validateUserName(userName)&&
-                validator.validatePassword(password)&&details[5].equals("normal")&&details[6].equals("out")) {
+                !validator.validatePassword(password)&&details[5].equals("normal")&&details[6].equals("out")) {
             User user = new User(userName);
             userMap.put(userName, user);
             userDetails.put(user, details);
+        }else{
+            System.out.println("error");
         }
     }
     public void deactivateUser(User user, Date date){

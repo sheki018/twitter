@@ -72,7 +72,7 @@ public class ViewProfileCommand implements Command{
             Map<String, String> tweetDetails = tweetEntry.getValue();
             for (Map.Entry<String, String> innerEntry : tweetDetails.entrySet()) {
                 userName = innerEntry.getKey();
-                type = userRepository.getAccountType(userRepository.getUser(userName));
+                type = userRepository.getAccountType(userRepository.getUser(tweet.getUserName()));
                 String tweetType = innerEntry.getValue();
                 if(tweetType.equalsIgnoreCase("retweet")){
                     printer.printContent("@" + userName + " retweeted");

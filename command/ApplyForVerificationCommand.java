@@ -33,6 +33,7 @@ public class ApplyForVerificationCommand implements Command{
             return;
         }
         userRepository.verifyUser(user);
+        user.addNotifications("You are now a verified user!");
         displayMessage.printContent("Hurray! You are a verified user now!");
     }
 

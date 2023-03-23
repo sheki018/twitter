@@ -43,7 +43,7 @@ public class RetweetCommand implements Command{
         for (Tweet tweet:
                 tweets) {
             printer.printContent(index + ". ");
-            printer.printTweet(tweet, userRepository.getAccountType(user));
+            printer.printTweet(tweet, userRepository.getAccountType(userRepository.getUser(tweet.getUserName())));
             index++;
         }
         UserInputScanner input = new UserInputScanner();
